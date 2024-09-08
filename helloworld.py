@@ -1,2 +1,2 @@
 print("Hello World!")
-# thank you for the beautiful comment wren. very cool.
+# Thank you for the beautiful comment Wren. Very cool.
