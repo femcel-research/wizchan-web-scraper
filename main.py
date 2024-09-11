@@ -7,11 +7,16 @@ page = requests.get(URL)
 soup = BeautifulSoup(page.content, "html.parser")
 threadContents = soup.find(class_= "body")
 
-#still working on printing all thread replies
-threadReplies = soup.find_all('div', class_= "post reply")
+print("Original Thread Content: " + threadContents.get_text() + '\n')
 
-print(threadContents.prettify())
-#print(threadReplies.prettify())
+#still working on printing all thread replies
+print("Replies:")
+threadReplies = soup.find_all(class_= "post reply")
+for reply in threadReplies:
+    print(reply.get_text())
+
+
+
 
 #for replies in threadReplies:
     #replyContents = threadReplies.find_all('div', class_="body")
