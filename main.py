@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 
 # Website URL
 URL = "https://crystal.cafe/b/res/293815.html#294827"
+
+#Notes:
+
 page = requests.get(URL)
 
 # Creates a soup object.
