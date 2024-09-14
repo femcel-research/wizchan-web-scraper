@@ -1,15 +1,36 @@
 import requests
 from bs4 import BeautifulSoup
+from pywebcopy import save_webpage
 
 # Website URL
-URL = "https://crystal.cafe/b/res/293815.html#294827"
+#URL = "https://crystal.cafe/b/res/293815.html#294827"
+URL = "https://crystal.cafe/b/res/294499.html#q294499"
+page = requests.get(URL, stream = True)
 
-#Notes:
 
-page = requests.get(URL)
 
 # Creates a soup object.
 soup = BeautifulSoup(page.content, "html.parser")
+
+#Should hopefully always return the thread number, given that for crystal.cafe, the thread number is always the first id in the intro class
+threadNumber = soup.find(class_= "intro").get('id')
+#print(threadNumber)
+
+#pywebcopy is a crawler that works to save html, css, and .js from websites to local storage -Moyartu 
+#install pywebcopy and lxml[html_clean] package for use.
+
+#Saves a copy of the URL to the HTML folder. Contents are nested in a folder named after the specific thread number.
+save_webpage(
+    url = URL,
+   project_folder = "./HTML",
+   project_name = "thread_" + threadNumber,
+   bypass_robots=True,
+   debug=True,
+   open_in_browser=False,
+   delay=None,
+   threaded = True
+)
+
 
 # Finds the first instance of a page element with the class "body". 
 # Within a specific thread page, this most likely be the original thread.
