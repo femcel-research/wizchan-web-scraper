@@ -25,7 +25,7 @@ save_webpage(
    debug=True,
    open_in_browser=False,
    delay=None,
-   threaded = True
+   threaded = True #if set to false downloads will be incredibly slow.
 )
 
 
