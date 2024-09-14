@@ -7,14 +7,11 @@ from pywebcopy import save_webpage
 URL = "https://crystal.cafe/b/res/294499.html#q294499"
 page = requests.get(URL, stream = True)
 
-
-
 # Creates a soup object.
 soup = BeautifulSoup(page.content, "html.parser")
 
 #Should hopefully always return the thread number, given that for crystal.cafe, the thread number is always the first id in the intro class
 threadNumber = soup.find(class_= "intro").get('id')
-#print(threadNumber)
 
 #pywebcopy is a crawler that works to save html, css, and .js from websites to local storage -Moyartu 
 #install pywebcopy and lxml[html_clean] package for use.
