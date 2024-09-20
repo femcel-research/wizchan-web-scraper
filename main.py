@@ -1,4 +1,6 @@
 import requests
+import UrlPuller
+import os
 from bs4 import BeautifulSoup
 from pywebcopy import save_webpage
 
