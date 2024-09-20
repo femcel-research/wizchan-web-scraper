@@ -13,7 +13,7 @@ class Webcopy:
         """Saves a copy of the URL to the HTML folder. Contents are nested in a folder named after the specific thread number."""
         save_webpage(
             url = self.URL,
-        project_folder = './HTML',
+        project_folder = './data/HTML',
         project_name = "thread_" + self.threadNumber,
         bypass_robots=True,
         debug=True,

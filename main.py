@@ -8,7 +8,8 @@ from utils import UrlPuller
 #URL = "https://crystal.cafe/b/res/293815.html#294827"
 #URL = "https://crystal.cafe/b/res/294499.html#q294499"
 #URL = "https://crystal.cafe/b/res/140376.html#q140376"
-URL = "https://crystal.cafe/feels/res/63992.html#116946"
+# URL = "https://crystal.cafe/feels/res/63992.html#116946"
+URL = "https://crystal.cafe/b/res/273609.html#295472"
 
 page = requests.get(URL, stream = True)
 
