@@ -3,12 +3,13 @@ import os
 from bs4 import BeautifulSoup
 from pywebcopy import save_webpage
 import UrlPuller
-import WebCopy
 from TextSaver import TextSaver
+from WebCopy import Webcopy
 
 # Website URL
 #URL = "https://crystal.cafe/b/res/293815.html#294827"
-URL = "https://crystal.cafe/b/res/294499.html#q294499"
+#URL = "https://crystal.cafe/b/res/294499.html#q294499"
+URL = "https://crystal.cafe/b/res/140376.html#q140376"
 page = requests.get(URL, stream = True)
 
 # Creates a soup object.
@@ -50,6 +51,6 @@ saveText = textSaver.write_thread(originalPost, postReplies)
 (saveText)
 
 # Saves local copy of url and stores in a folder named after thread number
-#pageCopy = WebCopy.save_webpage(URL, threadNumber)
-
-#(pageCopy)
+webCopy = Webcopy(URL, threadNumber)
+pageCopy = webCopy.save_to_html()
+(pageCopy)
