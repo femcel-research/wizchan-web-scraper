@@ -1,8 +1,10 @@
 import requests
-import UrlPuller
 import os
 from bs4 import BeautifulSoup
 from pywebcopy import save_webpage
+import UrlPuller
+import WebCopy
+from TextSaver import TextSaver
 
 # Website URL
 #URL = "https://crystal.cafe/b/res/293815.html#294827"
@@ -12,31 +14,15 @@ page = requests.get(URL, stream = True)
 # Creates a soup object.
 soup = BeautifulSoup(page.content, "html.parser")
 
+# Returns top portion of original post
+threadIntro = soup.find(class_="intro")
+
 #Should hopefully always return the thread number, given that for crystal.cafe, the thread number is always the first id in the intro class
 threadNumber = soup.find(class_= "intro").get('id')
-
-#pywebcopy is a crawler that works to save html, css, and .js from websites to local storage -Moyartu 
-#install pywebcopy and lxml[html_clean] package for use.
-
-#Saves a copy of the URL to the HTML folder. Contents are nested in a folder named after the specific thread number.
-# save_webpage(
-#     url = URL,
-#    project_folder = "./HTML",
-#    project_name = "thread_" + threadNumber,
-#    bypass_robots=True,
-#    debug=True,
-#    open_in_browser=False,
-#    delay=None,
-#    threaded = True #if set to false downloads will be incredibly slow.
-# )
-
 
 # Finds the first instance of a page element with the class "body". 
 # Within a specific thread page, this most likely be the original thread.
 originalPost = soup.find(class_= "post op")
-
-# Returns top portion of original post
-threadIntro = soup.find(class_="intro")
 
 # Variable holds the ID of the original post.
 originalPostID= threadIntro['id']
@@ -47,30 +33,23 @@ postReplies = soup.find_all(class_= "post reply")
 # Returns an array containing the ID for each reply.
 postReplyIds = [reply['id'] for reply in postReplies]
 
-allImages = soup.find_all(class_="post-image")
-print(allImages)
-#dateCollected = 
+# Returns an array containing all of the image data for post images
+allImages = soup.find_all('img', class_="post-image")
 
-#TODO finish datePosted
-# datePosted= soup.find(class_="post_no date link").title.get_text()
-#print(datePosted)
+# Returns the sources for each post image
+imageSources = [image['src'] for image in allImages]
+
+# Returns imageboard name
 board = soup.header.h1.get_text()
 
+#TODO dateCollected = 
 
+# Saves text from page in a .txt file named after the string arg
+textSaver = TextSaver("testfile.txt")
+saveText = textSaver.write_thread(originalPost, postReplies)
+(saveText)
 
-# Opens a writeable text file, writes related headers and original post content on it and then closes file.
-# with open('testfile.txt', 'w', encoding='utf-8') as outputFile:
-#     outputFile.write("Original Post: " + '\n')
-#     outputFile.write(originalPost.get_text() + '\n\n')
-#     outputFile.write("Replies:" + '\n')
+# Saves local copy of url and stores in a folder named after thread number
+#pageCopy = WebCopy.save_webpage(URL, threadNumber)
 
-# For each reply in the array, the text is taken from the array element and appended into an open text file. 
-# HTML tags are excluded, and the file is closed once the code is executed.
-# for reply in postReplies:
-#     with open('testfile.txt', 'a', encoding='utf-8') as outputFile:
-#         outputFile.write(reply.get_text() + '\n')
-
-# Opens, prints contents of text file in terminal for debugging, and then closes the file once code is executed.
-# with open('testfile.txt', 'r', encoding='utf-8') as outputFile:
-#         print(outputFile.read())
-
+#(pageCopy)
