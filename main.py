@@ -32,10 +32,22 @@ threadNumber = soup.find(class_= "intro").get('id')
 # Finds the first instance of a page element with the class "body". 
 # Within a specific thread page, this most likely be the original thread.
 originalPost = soup.find(class_= "post op")
+
+# Returns top portion of original post
 threadIntro = soup.find(class_="intro")
+
+# Variable holds the ID of the original post.
 originalPostID= threadIntro['id']
-#userIDs = 
-#imageIDs=
+
+# Finds every page element with the class "post reply" and returns it in an array.
+postReplies = soup.find_all(class_= "post reply")
+
+# Returns an array containing the ID for each reply.
+postReplyIds = [reply['id'] for reply in postReplies]
+
+allImages = soup.find_all(class_="post-image")
+
+print(allImages)
 #dateCollected = 
 
 #TODO finish datePosted
@@ -50,9 +62,6 @@ board = soup.header.h1.get_text()
 #     outputFile.write("Original Post: " + '\n')
 #     outputFile.write(originalPost.get_text() + '\n\n')
 #     outputFile.write("Replies:" + '\n')
-
-# Finds every page element with the class "post reply" and returns it in an array.
-postReplies = soup.find_all(class_= "post reply") 
 
 # For each reply in the array, the text is taken from the array element and appended into an open text file. 
 # HTML tags are excluded, and the file is closed once the code is executed.
