@@ -43,7 +43,7 @@ imageSources = [image['src'] for image in allImages]
 # Returns imageboard name
 board = soup.header.h1.get_text()
 
-#TODO dateCollected = 
+#TODO dateCollected is captured in the HTML file when local files are downloaded, time is in UTC
 
 # Saves text from page in a .txt file named after the string arg
 textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
