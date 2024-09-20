@@ -1,15 +1,15 @@
 import requests
-import os
 from bs4 import BeautifulSoup
-from pywebcopy import save_webpage
-import UrlPuller
-from TextSaver import TextSaver
-from WebCopy import Webcopy
+from utils import TextSaver
+from utils import Webcopy
+from utils import UrlPuller
 
 # Website URL
 #URL = "https://crystal.cafe/b/res/293815.html#294827"
 #URL = "https://crystal.cafe/b/res/294499.html#q294499"
-URL = "https://crystal.cafe/b/res/140376.html#q140376"
+#URL = "https://crystal.cafe/b/res/140376.html#q140376"
+URL = "https://crystal.cafe/feels/res/63992.html#116946"
+
 page = requests.get(URL, stream = True)
 
 # Creates a soup object.
@@ -46,8 +46,8 @@ board = soup.header.h1.get_text()
 #TODO dateCollected = 
 
 # Saves text from page in a .txt file named after the string arg
-textSaver = TextSaver("testfile.txt")
-saveText = textSaver.write_thread(originalPost, postReplies)
+textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
+saveText = textSaver.write_thread()
 (saveText)
 
 # Saves local copy of url and stores in a folder named after thread number
