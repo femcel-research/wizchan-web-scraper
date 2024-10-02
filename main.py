@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from utils import TextSaver
-from utils import Webcopy
+#from utils import Webcopy
 from utils import UrlPuller
 from utils import WebpageSaver
 
@@ -58,5 +58,6 @@ board = soup.header.h1.get_text()
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
 
-webpageSaver= WebpageSaver.saveWebpage()
-(webpageSaver)
+webpageSaver= WebpageSaver(URL, threadNumber)
+savePage = webpageSaver.saveHTML()
+(savePage)
