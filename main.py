@@ -64,5 +64,5 @@ board = soup.header.h1.get_text()
 # (savePage)
 
 metaCollector = MetaCollector(URL, threadNumber)
-date = metaCollector.dateToJSON()
-(date)
+dump = metaCollector.meta_dump()
+(dump)
