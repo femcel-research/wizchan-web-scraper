@@ -4,6 +4,7 @@ from utils import TextSaver
 #from utils import Webcopy
 from utils import UrlPuller
 from utils import WebpageSaver
+from utils import MetaCollector
 
 # Website URL
 #URL = "https://crystal.cafe/b/res/293815.html#294827"
@@ -58,6 +59,10 @@ board = soup.header.h1.get_text()
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
 
-webpageSaver= WebpageSaver(URL, threadNumber)
-savePage = webpageSaver.saveHTML()
-(savePage)
+# webpageSaver= WebpageSaver(URL, threadNumber)
+# savePage = webpageSaver.saveHTML()
+# (savePage)
+
+metaCollector = MetaCollector(URL, threadNumber)
+date = metaCollector.dateToJSON()
+(date)

@@ -10,7 +10,7 @@ class WebpageSaver:
         self.pageTitle = pageTitle
 
     def saveHTML(self):
-        folder_path = './data/HTML'
+        folder_path = './web-scraper/data/HTML'
         file_name = "thread_" + self.pageTitle + ".html"
         file_path = os.path.join(folder_path, file_name) 
 
