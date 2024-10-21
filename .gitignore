@@ -5,4 +5,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 .venv
-web-scraper/femcel_venv/**
+femcel_venv/
