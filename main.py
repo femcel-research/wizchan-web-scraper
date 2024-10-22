@@ -4,7 +4,7 @@ from utils import TextSaver
 
 # from utils import Webcopy
 from utils import UrlPuller
-from utils import WebpageSaver
+from utils import HTMLCollector
 from utils import MetaCollector
 
 # Website URL
@@ -48,8 +48,6 @@ imageSources = [image["src"] for image in allImages]
 # Returns imageboard name
 board = soup.header.h1.get_text()
 
-# TODO dateCollected is captured in the HTML file when local files are downloaded, time is in UTC
-
 # Saves text from page in a .txt file named after the string arg
 # textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
 # saveText = textSaver.write_thread()
@@ -60,9 +58,9 @@ board = soup.header.h1.get_text()
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
 
-# webpageSaver= WebpageSaver(URL, threadNumber)
-# savePage = webpageSaver.saveHTML()
-# (savePage)
+HTMLCollection = HTMLCollector(URL, threadNumber)
+saveHTML = HTMLCollection.saveHTML()
+(saveHTML)
 
 metaCollector = MetaCollector(URL, threadNumber)
 dump = metaCollector.meta_dump()

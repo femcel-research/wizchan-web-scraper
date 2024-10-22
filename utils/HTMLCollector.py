@@ -4,7 +4,7 @@ import os
 
 
 
-class WebpageSaver:
+class HTMLCollector:
     def __init__(self, URL, pageTitle):
         self.URL = URL
         self.pageTitle = pageTitle
