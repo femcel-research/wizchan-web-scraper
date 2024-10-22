@@ -51,7 +51,7 @@ board = soup.header.h1.get_text()
 # Saves text from page in a .txt file named after the string arg
 # textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
 # saveText = textSaver.write_thread()
-# (saveText)
+#(saveText)
 
 # Saves local copy of url and stores in a folder named after thread number
 # webCopy = Webcopy(URL, threadNumber)

@@ -25,15 +25,15 @@ class MetaCollector:
 
         # Uses htmldate lib to find original and update dates
         publish_Date = find_date(
-            self.response.content, extensive_search=True, original_date=True
+            self.response.content, extensive_search=True, original_date=True, outputformat= "%Y-%m-%d %H:%M:%S"
         )
         update_Date = find_date(
-            self.response.content, extensive_search=False, original_date=False
+            self.response.content, extensive_search=False, original_date=False, outputformat= "%Y-%m-%d %H:%M:%S"
         )
 
         # Assumption is that each time this func is run during scrape, it will capture the time of scrape
         scrape_date = datetime.datetime.now()
-        formatted_date = scrape_date.strftime("%Y-%m-%d")
+        formatted_date = scrape_date.strftime("%Y-%m-%d %H:%M:%S")
 
         dates = {
             "date published": publish_Date,
