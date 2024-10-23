@@ -1,4 +1,6 @@
 class TextSaver:
+    #TODO maybe save relevant text as .JSON?
+    
     def __init__(self, filename, originalPost, postReplies, threadNumber):
         self.filename = filename
         self.originalPost = originalPost

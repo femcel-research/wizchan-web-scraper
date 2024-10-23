@@ -53,7 +53,7 @@ board = soup.header.h1.get_text()
 # saveText = textSaver.write_thread()
 #(saveText)
 
-# Saves local copy of url and stores in a folder named after thread number
+# Saves local copy of url and stores in a folder named after thread number COLLECTS IMAGES DONT USE FOR NOW
 # webCopy = Webcopy(URL, threadNumber)
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
