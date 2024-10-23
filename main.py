@@ -49,19 +49,19 @@ imageSources = [image["src"] for image in allImages]
 board = soup.header.h1.get_text()
 
 # Saves text from page in a .txt file named after the string arg
-# textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
-# saveText = textSaver.write_thread()
-#(saveText)
+textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
+saveText = textSaver.write_thread()
+(saveText)
 
 # Saves local copy of url and stores in a folder named after thread number COLLECTS IMAGES DONT USE FOR NOW
 # webCopy = Webcopy(URL, threadNumber)
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
 
-HTMLCollection = HTMLCollector(URL, threadNumber)
-saveHTML = HTMLCollection.saveHTML()
-(saveHTML)
+# HTMLCollection = HTMLCollector(URL, threadNumber)
+# saveHTML = HTMLCollection.saveHTML()
+# (saveHTML)
 
-metaCollector = MetaCollector(URL, threadNumber)
-dump = metaCollector.meta_dump()
-(dump)
+# metaCollector = MetaCollector(URL, threadNumber)
+# dump = metaCollector.meta_dump()
+# (dump)
