@@ -12,8 +12,8 @@ from utils import MetaCollector
 # URL = "https://crystal.cafe/b/res/294499.html#q294499"
 # URL = "https://crystal.cafe/b/res/140376.html#q140376"
 # URL = "https://crystal.cafe/feels/res/63992.html#116946"
-# URL = "https://crystal.cafe/b/res/273609.html#295472"
-URL = "https://crystal.cafe/b/res/295503.html#q295503"
+URL = "https://crystal.cafe/b/res/273609.html#295472"
+#URL = "https://crystal.cafe/b/res/295503.html#q295503"
 
 page = requests.get(URL, stream=True)
 
