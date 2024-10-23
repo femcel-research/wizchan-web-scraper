@@ -1,8 +1,0 @@
-# Byte-compiled / optimized / DLL files
-*.pyc
-*.pyo
-__pycache__/
-*.py[cod]
-*$py.class
-.venv
-testfile.txt
