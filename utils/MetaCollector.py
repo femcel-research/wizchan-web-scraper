@@ -9,11 +9,10 @@ import os
 class MetaCollector:
     """Collects metadata from a website and stores it in a JSON file"""
 
-    def __init__(self, URL, pageName):
+    def __init__(self, page, pageName):
         # Website info
-        self.URL = URL
         self.pageName = pageName
-        self.response = requests.get(self.URL)
+        self.page = page
 
         # File path
         self.folder_path = "./web-scraper/data/meta"
@@ -25,10 +24,10 @@ class MetaCollector:
 
         # Uses htmldate lib to find original and update dates
         publish_Date = find_date(
-            self.response.content, extensive_search=True, original_date=True, outputformat= "%Y-%m-%d %H:%M:%S"
+            self.page.content, extensive_search=True, original_date=True, outputformat= "%Y-%m-%d %H:%M:%S"
         )
         update_Date = find_date(
-            self.response.content, extensive_search=False, original_date=False, outputformat= "%Y-%m-%d %H:%M:%S"
+            self.page.content, extensive_search=False, original_date=False, outputformat= "%Y-%m-%d %H:%M:%S"
         )
 
         # Assumption is that each time this func is run during scrape, it will capture the time of scrape
