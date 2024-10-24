@@ -6,14 +6,15 @@ import datetime
 import os
 
 
+# add automatic html, meta, thread folders
 class MetaCollector:
     """Collects metadata from a website and stores it in a JSON file"""
 
-    def __init__(self, page):
+    def __init__(self, page, soup):
         # Website info
         self.page = page
-        soup = BeautifulSoup(self.page.content, "html.parser")
-        self.pageName = threadNumber = soup.find(class_="intro").get("id")
+        self.soup = soup
+        self.pageName = soup.find(class_="intro").get("id")
 
         # File path
         self.folder_path = "./web-scraper/data/meta"
@@ -25,10 +26,16 @@ class MetaCollector:
 
         # Uses htmldate lib to find original and update dates
         publish_Date = find_date(
-            self.page.content, extensive_search=True, original_date=True, outputformat= "%Y-%m-%d %H:%M:%S"
+            self.page.content,
+            extensive_search=True,
+            original_date=True,
+            outputformat="%Y-%m-%d %H:%M:%S",
         )
         update_Date = find_date(
-            self.page.content, extensive_search=False, original_date=False, outputformat= "%Y-%m-%d %H:%M:%S"
+            self.page.content,
+            extensive_search=False,
+            original_date=False,
+            outputformat="%Y-%m-%d %H:%M:%S",
         )
 
         # Assumption is that each time this func is run during scrape, it will capture the time of scrape
@@ -47,17 +54,17 @@ class MetaCollector:
         """Captures page URL, title, description, keywords, site info"""
 
         page = requests.get(self.URL, stream=True)
-        soup = BeautifulSoup(page.content, "html.parser")
+        # soup = BeautifulSoup(page.content, "html.parser")
 
         # If meta keywords has content create a variable with that content, otherwise set to empty string
-        meta_keywords = soup.find("meta", attrs={"name": "keywords"})
+        meta_keywords = self.soup.find("meta", attrs={"name": "keywords"})
         if meta_keywords:
             keywords = meta_keywords["content"]
         else:
             keywords = ""
 
         # If meta description has content create a variable with that content, otherwise set to empty string
-        meta_description = soup.find("meta", attrs={"name": "description"})
+        meta_description = self.soup.find("meta", attrs={"name": "description"})
         if meta_description:
             description = meta_description["content"]
         else:
@@ -65,8 +72,8 @@ class MetaCollector:
 
         info = {
             "URL": page.url,
-            "board": soup.title.string,  # for cc its safe to assume each title will be the board name
-            "thread number": soup.find(class_="intro").get("id"),
+            "board": self.soup.title.string,  # for cc its safe to assume each title will be the board name
+            "thread number": self.soup.find(class_="intro").get("id"),
             "description": description,
             "keywords": keywords,
         }
