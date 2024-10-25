@@ -7,7 +7,8 @@ from utils import Process
 #   (not the message number! For example, in https://crystal.cafe/feels/res/117906.html#117998,
 #   the thread number is 117906, not 117998!)
 
-list_path = os.path.abspath("./data/lists/urls2.txt")
-process = Process(list_path)
+list_path = os.path.abspath("./data/lists")
+file_path = os.path.join(list_path, "urls.txt")
+process = Process(file_path)
 process.process_current_list()
 print("processed")
