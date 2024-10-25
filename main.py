@@ -16,9 +16,9 @@ URL = "https://crystal.cafe/b/res/273609.html#295472"
 #URL = "https://crystal.cafe/b/res/295503.html#q295503"
 
 page = requests.get(URL, stream=True)
-
+soup = BeautifulSoup(page.content, "html.parser")
 # Saves text from page in a .txt file named after the string arg
-textCollector = TextCollector(page)
+textCollector = TextCollector(soup)
 textCollector.write_thread()
 
 # Saves local copy of url and stores in a folder named after thread number COLLECTS IMAGES DONT USE FOR NOW
