@@ -1,5 +1,9 @@
 import requests
 import os
+"""
+DEPRECATED 20241024
+"""
+
 #pywebcopy is a crawler that works to save html, css, and .js from websites to local storage -Moyartu 
 #install pywebcopy and lxml[html_clean] package for use.
 from pywebcopy import save_webpage
