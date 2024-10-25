@@ -22,10 +22,10 @@ class Process:
         soup = BeautifulSoup(page.content, "html.parser")
         return soup
 
-    def make_thread_directory(id):
+    def make_thread_directory(self, id):
         """Creates a new folder to associate with the thread being processed"""
-        thread_folder_path = "./web-scraper/data/" + id
-        os.mkdir(thread_folder_path)
+        self.thread_folder_path = "./web-scraper/data/" + id
+        os.mkdir(self.thread_folder_path)
 
     def process_current_list(self):
         """For each URL in the list, get HTML, metadata JSON, and content JSON"""
@@ -39,15 +39,15 @@ class Process:
             self.make_thread_directory(id)
 
             # HTML file
-            html = HTMLCollector(soup)
+            html = HTMLCollector(soup, self.thread_folder_path)
             html.saveHTML()
 
             # JSON metadata file
-            meta = MetaCollector(page, soup)
+            meta = MetaCollector(page, soup, self.thread_folder_path)
             meta.meta_dump()
 
             # JSON thread content file
-            content = TextCollector(soup)
+            content = TextCollector(soup, self.thread_folder_path)
             content.write_thread()
 
             # Add URL to list of processed URLs
