@@ -53,7 +53,8 @@ class MetaCollector:
     def page_info_to_JSON(self):
         """Captures page URL, title, description, keywords, site info"""
 
-        page = requests.get(self.URL, stream=True)
+        # page = requests.get(self.URL, stream=True)
+        page = self.page
         # soup = BeautifulSoup(page.content, "html.parser")
 
         # If meta keywords has content create a variable with that content, otherwise set to empty string

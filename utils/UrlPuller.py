@@ -8,7 +8,9 @@ class UrlPuller:
         self.url_index = 0
         with open(self.filename, 'r') as file:
             for line in file:
+                line= line.replace("\n", "")
                 self.url_list.append(line)
+        print(self.url_list)
 
     def next_url(self):
         """Shifts index for when you want to call get_url on the next entry"""
@@ -16,7 +18,7 @@ class UrlPuller:
 
     def get_url(self):
         """Returns URL at current index"""
-        return self.url_list[self.url_index]
+        return self.url_list[self.url_index].strip()
     
     def get_size(self):
         """Returns the number of entries in the list created from the file specified on initialization"""

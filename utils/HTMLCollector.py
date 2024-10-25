@@ -8,7 +8,7 @@ class HTMLCollector:
     """Saves a URL's HTML into a file"""
     def __init__(self, soup, folder_path):
         self.soup = soup
-        self.folder_path
+        self.folder_path = folder_path
 
     def saveHTML(self):
         """Saves HTML"""
@@ -16,7 +16,7 @@ class HTMLCollector:
         # Should hopefully always return the thread number, given that for crystal.cafe, the thread number is always the first id in the intro class
         threadNumber = self.soup.find(class_="intro").get("id")
         
-        folder_path = './web-scraper/data/HTML'
+        # self.folder_path = './web-scraper/data/HTML'
         file_name = "thread_" + threadNumber + ".html"
         file_path = os.path.join(self.folder_path, file_name) 
         
