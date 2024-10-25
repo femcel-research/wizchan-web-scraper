@@ -5,7 +5,7 @@ import os
 class TextCollector:
     #TODO maybe save relevant text as .JSON?
     
-    def __init__(self, soup):
+    def __init__(self, soup, folder_path):
         
         # Creates a soup object.
         self.soup = soup
@@ -36,7 +36,7 @@ class TextCollector:
         # Returns imageboard name
         board = soup.header.h1.get_text()
         
-        self.folder_path = "./web-scraper/data/thread_contents"        
+        self.folder_path = folder_path        
         self.file_name = self.threadNumber + ".json"
         self.file_path = os.path.join(self.folder_path, self.file_name)
     

@@ -10,14 +10,14 @@ import os
 class MetaCollector:
     """Collects metadata from a website and stores it in a JSON file"""
 
-    def __init__(self, page, soup):
+    def __init__(self, page, soup, folder_path):
         # Website info
         self.page = page
         self.soup = soup
         self.pageName = soup.find(class_="intro").get("id")
 
         # File path
-        self.folder_path = "./web-scraper/data/meta"
+        self.folder_path = folder_path
         self.file_name = "thread_" + self.pageName + ".json"
         self.file_path = os.path.join(self.folder_path, self.file_name)
 
