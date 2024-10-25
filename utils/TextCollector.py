@@ -37,7 +37,7 @@ class TextCollector:
         board = soup.header.h1.get_text()
         
         self.folder_path = folder_path        
-        self.file_name = self.threadNumber + ".json"
+        self.file_name = "content_" + self.threadNumber + ".json"
         self.file_path = os.path.join(self.folder_path, self.file_name)
     
 

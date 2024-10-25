@@ -28,7 +28,7 @@ class Process:
         os.makedirs(self.thread_folder_path, exist_ok=True)
 
     def process_current_list(self):
-        """For each URL in the list, get HTML, metadata JSON, and content JSON"""
+        """For each URL in the list, get thread HTML, metadata JSON, and content JSON"""
 
         for i in range(self.puller.get_size()):
             # Gets page from URL and makes a new directory for the thread
@@ -39,8 +39,8 @@ class Process:
             self.make_thread_directory(id)
 
             # HTML file
-            html = HTMLCollector(soup, self.thread_folder_path)
-            (html.saveHTML())
+            thread = HTMLCollector(soup, self.thread_folder_path)
+            (thread.saveHTML())
 
             # JSON metadata file
             meta = MetaCollector(page, soup, self.thread_folder_path)

@@ -10,7 +10,6 @@ class UrlPuller:
             for line in file:
                 line= line.replace("\n", "")
                 self.url_list.append(line)
-        print(self.url_list)
 
     def next_url(self):
         """Shifts index for when you want to call get_url on the next entry"""

@@ -18,7 +18,7 @@ class MetaCollector:
 
         # File path
         self.folder_path = folder_path
-        self.file_name = "thread_" + self.pageName + ".json"
+        self.file_name = "meta_" + self.pageName + ".json"
         self.file_path = os.path.join(self.folder_path, self.file_name)
 
     def date_to_JSON(self):
