@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from utils import TextSaver
+from utils import TextCollector
 
 # from utils import Webcopy
 from utils import UrlPuller
@@ -17,22 +17,19 @@ URL = "https://crystal.cafe/b/res/273609.html#295472"
 
 page = requests.get(URL, stream=True)
 
-
-
 # Saves text from page in a .txt file named after the string arg
-textSaver = TextSaver("testfile.txt", originalPost, postReplies, threadNumber)
-saveText = textSaver.write_thread()
-(saveText)
+textCollector = TextCollector(page)
+textCollector.write_thread()
 
 # Saves local copy of url and stores in a folder named after thread number COLLECTS IMAGES DONT USE FOR NOW
 # webCopy = Webcopy(URL, threadNumber)
 # pageCopy = webCopy.save_to_html()
 # (pageCopy)
 
-HTMLCollection = HTMLCollector(page)
-saveHTML = HTMLCollection.saveHTML()
-(saveHTML)
+# HTMLCollection = HTMLCollector(page)
+# saveHTML = HTMLCollection.saveHTML()
+# (saveHTML)
 
-metaCollector = MetaCollector(page)
-dump = metaCollector.meta_dump()
-(dump)
+# metaCollector = MetaCollector(page)
+# dump = metaCollector.meta_dump()
+# (dump)
