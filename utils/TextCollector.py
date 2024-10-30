@@ -24,9 +24,6 @@ class TextCollector:
         # Finds every page element with the class "post reply" and returns it in an array.
         self.postReplies = soup.find_all(class_="post reply")
 
-        # Returns an array containing the ID for each reply.
-        postReplyIds = [reply["id"] for reply in self.postReplies]
-
         # Returns an array containing all of the image data for post images
         self.allImages = soup.find_all("img", class_="post-image")
 
@@ -50,8 +47,10 @@ class TextCollector:
         
         for reply in self.postReplies:
              reply_content = {
-                 "reply id": reply["id"],
-                 "content": reply.get_text()
+                 "reply id": reply.find(class_="intro").get("id"),
+                 "name":  reply.find(class_="name").get_text(),
+                 "date": reply.find(class_="post_no date-link").get("title"),
+                 "post content": reply.find(class_="body").get_text()
              }
              originalPost[reply["id"]] = reply_content
         with open(self.file_path, "w", encoding="utf-8") as f:
