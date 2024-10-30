@@ -1,4 +1,4 @@
-import UrlPuller
+import deprecated.UrlPuller as UrlPuller
 import os
 
 puller_file = os.path.join('URLs', 'list.txt')
