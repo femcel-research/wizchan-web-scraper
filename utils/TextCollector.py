@@ -24,6 +24,9 @@ class TextCollector:
         # Finds every page element with the class "post reply" and returns it in an array.
         self.postReplies = soup.find_all(class_="post reply")
 
+        # Returns an array containing the ID for each reply.
+        postReplyIds = [reply["id"] for reply in self.postReplies]
+
         # Returns an array containing all of the image data for post images
         self.allImages = soup.find_all("img", class_="post-image")
 
@@ -40,18 +43,27 @@ class TextCollector:
 
     def write_thread(self):
         """Opens a writeable text file, writes related headers and original post content on it and then closes file."""
-        originalPost = {
+        threadContents = {
             "thread number": self.threadNumber,
-            "original post": self.originalPost.get_text()
         }
+        
+        original_content = {
+            "post id": self.originalPost.find(class_="intro").get("id"),
+            "username":  self.originalPost.find(class_="name").get_text(),
+            "date posted": self.originalPost.find(class_="post_no date-link").get("title"),
+            "post content": self.originalPost.find(class_="body").get_text() 
+        }
+        
+        threadContents["original post"] = original_content
+        
         
         for reply in self.postReplies:
              reply_content = {
                  "reply id": reply.find(class_="intro").get("id"),
-                 "name":  reply.find(class_="name").get_text(),
-                 "date": reply.find(class_="post_no date-link").get("title"),
+                 "username":  reply.find(class_="name").get_text(),
+                 "date posted": reply.find(class_="post_no date-link").get("title"),
                  "post content": reply.find(class_="body").get_text()
              }
-             originalPost[reply["id"]] = reply_content
+             threadContents[reply["id"]] = reply_content
         with open(self.file_path, "w", encoding="utf-8") as f:
-            json.dump(originalPost, f, indent=3, ensure_ascii=False)
+            json.dump(threadContents, f, indent=3, ensure_ascii=False)
