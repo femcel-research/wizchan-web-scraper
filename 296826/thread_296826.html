@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <link href="/stylesheets/style.css" media="screen" rel="stylesheet"/>
+  <link href="/stylesheets/custom.css" media="screen" rel="stylesheet"/>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="width=device-width, initial-scale=1, user-scalable=yes" name="viewport"/>
+  <meta content="crystal.cafe,crystalcafe,cc chan,feminism,girls,women,anonymous community," name="keywords"/>
+  <link href="/stylesheets/font-awesome/css/font-awesome.min.css" media="screen" rel="stylesheet"/>
+  <script type="text/javascript">
+   var configRoot="/";
+  </script>
+  <script src="/main.js?v=1" type="text/javascript">
+  </script>
+  <title>
+   /b/ - Random
+  </title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js">
+  </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+  </script>
+  <script>
+   $( function() {    $( "#accordion" ).accordion();  } );
+  </script>
+ </head>
+ <body>
+  <div class="boardlist">
+   [
+   <a href="/rules.html">
+    Rules
+   </a>
+   /
+   <a href="/faq.html">
+    FAQ
+   </a>
+   ]  [
+   <a href="/meta/index.html">
+    meta
+   </a>
+   /
+   <a href="/b/index.html">
+    b
+   </a>
+   /
+   <a href="/media/index.html">
+    media
+   </a>
+   /
+   <a href="/img/index.html">
+    img
+   </a>
+   /
+   <a href="/feels/index.html">
+    feels
+   </a>
+   /
+   <a href="/hb/index.html">
+    hb
+   </a>
+   /
+   <a href="/x/index.html">
+    x
+   </a>
+   ]
+  </div>
+  <a href="/" style="display: block; margin: 20px auto 0 auto; width: 300px">
+   <img alt="" class="banner" src="/rotatingbanner"/>
+  </a>
+  <header>
+   <h1>
+    /b/ - Random
+   </h1>
+   <div class="subtitle">
+   </div>
+  </header>
+  <div class="banner">
+   Posting mode: Reply
+   <a class="unimportant" href="/b/index.html">
+    [Return]
+   </a>
+  </div>
+  <form action="/post.php" enctype="multipart/form-data" method="post" name="post" onsubmit="return dopost(this);">
+   <input name="user" style="display:none" type="text" value="#bZf.x%SI{G:JsK+hAXPH|4(65T&amp;\n'ul@r&gt;]1g}Qc3pa i2"/>
+   <input name="thread" type="hidden" value="296826"/>
+   <input name="9j7x6seu8go2dzwcvnhatkm1q34l5yp0bfir" style="display:none" type="text" value="*yv[=]5\WPjGgJCh0M&lt;d;FBX{Qt+YD}np3U!)Hu-@Im4OTl$,ac:bo82KZ`s?kq 9.&amp;#^i6rS7w/%1R_VxNe~ &gt;EfzA"/>
+   <input name="board" type="hidden" value="b"/>
+   <input name="username" style="display:none" type="text" value="2K4l;x$@M&lt;DtG#Hz5m"/>
+   <table>
+    <tr>
+     <th>
+      Name
+      <input name="0mfsb8lhqj627gviax3k5utpezrw1o4cdn9y6q2" type="hidden" value=""/>
+     </th>
+     <td>
+      <input autocomplete="turnoff" maxlength="35" name="name" placeholder="Anonymous" size="25" title="Only use this field with good reason" type="text"/>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Email
+     </th>
+     <td>
+      <input autocomplete="turnoff" maxlength="40" name="email" size="25" title="Only use this field if you wish to be contacted" type="text"/>
+      <input accesskey="s" name="post" style="margin-left:2px;" type="submit" value="Post Reply">
+      </input>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Message
+     </th>
+     <td>
+      <textarea cols="35" id="body" name="body" rows="5"></textarea>
+     </td>
+     <td class="post-formatting-info">
+      <p style="font-size:10px; color:#89A">
+       *Text* =&gt;
+       <i>
+        Text
+       </i>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       **Text** =&gt;
+       <b>
+        Text
+       </b>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       ***Text*** =&gt;
+       <b>
+        <i>
+         Text
+        </i>
+       </b>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       [spoiler]Text[/spoiler] =&gt;
+       <span class="spoiler">
+        Text
+       </span>
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Image
+     </th>
+     <td>
+      <input name="file" type="file"/>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Direct Link
+     </th>
+     <td>
+      <div style="float:none;text-align:left">
+       <label for="file_url">
+        YouTube
+       </label>
+       <input autocomplete="turnoff" maxlength="120" name="embed" size="35" style="display:inline" type="text"/>
+      </div>
+      <div style="float:none;text-align:left">
+       <label for="file_url">
+        Imgur
+       </label>
+       <input id="file_url" name="file_url" size="35" style="display:inline" type="text"/>
+      </div>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Options
+     </th>
+     <td>
+      <input id="spoiler" name="spoiler" type="checkbox"/>
+      NSFW image
+      <br/>
+      <input id="sage" name="sage" type="checkbox"/>
+      Sage
+      <span class="sage-tip">
+       (thread won't be bumped)
+      </span>
+     </td>
+    </tr>
+   </table>
+   <input name="hash" type="hidden" value="180bb00837042e7f3b54575b9b4d760304c42895"/>
+   <input autocomplete="turnoff" name="password" type="hidden"/>
+  </form>
+  <script type="text/javascript">
+   rememberStuff();
+  </script>
+  <hr/>
+  <div class="blotter">
+   <hr/>
+   Check the Catalog before making a new thread.
+   <hr/>
+   Do not respond to maleposters. See Rule 7.
+   <hr/>
+   <span style="font-size: 125%">
+    Please read
+    <a href="/rules.html">
+     the rules
+    </a>
+    !
+    <b>
+     Last update: 04/27/2021
+    </b>
+   </span>
+  </div>
+  <hr>
+   <form action="/post.php" method="post" name="postcontrols">
+    <input name="board" type="hidden" value="b">
+     <div id="thread_296826">
+      <p class="fileinfo">
+       <a href="/b/src/1730163555856.png" title="Screenshot 2024-10-29 at 01-57-13 Amazon.com I Respect Women's Rights And Women's Wrongs T-Shirt Clothing Shoes &amp; Jewelry.png (337.84 KB, 1135x690)">
+        Screenshot 2024-10…
+       </a>
+      </p>
+      <a href="/b/src/1730163555856.png" target="_blank">
+       <img alt="" class="post-image swiftype" loading="lazy" src="/b/thumb/1730163555856.png" style="width:340px;height:207px"/>
+      </a>
+      <div class="post op">
+       <p class="intro" id="296826">
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296826.html#296826" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296826) : true;" title="10/29/24 (Tue) 12:59:15 AM">
+          <time datetime="2024-10-29T00:59:15Z">
+           10/29/24 (Tue) 12:59:15 AM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296826.html#q296826" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296826) : true;">
+         296826
+        </a>
+        <a class="arrow-post-options" data-postid="296826" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        Is this cute? I think it's cute but I've been femcelmaxxing for a hot minute and I think I don't know what's cute anymore. I'm thinking I could get it oversized and wear it with cargo pants and some air forces
+       </div>
+      </div>
+      <div class="post reply" id="reply_296827">
+       <p class="intro" id="296827">
+        <!-- <input type="checkbox" class="delete" name="delete_296827" id="delete_296827" /> -->
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296826.html#296827" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296827) : true;" title="10/29/24 (Tue) 03:08:57 AM">
+          <time datetime="2024-10-29T03:08:57Z">
+           10/29/24 (Tue) 03:08:57 AM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296826.html#q296827" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296827) : true;">
+         296827
+        </a>
+        <a class="arrow-post-options" data-postid="296827" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        I think it's cute and based as hell. I'd wear it myself, honestly.
+        <br>
+         <br/>
+         Cargo pants are a good idea with this one.
+        </br>
+       </div>
+      </div>
+      <br/>
+      <div class="post reply" id="reply_296832">
+       <p class="intro" id="296832">
+        <!-- <input type="checkbox" class="delete" name="delete_296832" id="delete_296832" /> -->
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296826.html#296832" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296832) : true;" title="10/29/24 (Tue) 01:57:17 PM">
+          <time datetime="2024-10-29T13:57:17Z">
+           10/29/24 (Tue) 01:57:17 PM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296826.html#q296832" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296832) : true;">
+         296832
+        </a>
+        <a class="arrow-post-options" data-postid="296832" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        <a href="/b/res/296826.html#296827" onclick="highlightReply('296827');">
+         &gt;&gt;296827
+        </a>
+        <br/>
+        that's all I needed to pull the trigger
+       </div>
+      </div>
+      <br/>
+      <div class="post reply" id="reply_296835">
+       <p class="intro" id="296835">
+        <!-- <input type="checkbox" class="delete" name="delete_296835" id="delete_296835" /> -->
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296826.html#296835" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296835) : true;" title="10/29/24 (Tue) 08:49:13 PM">
+          <time datetime="2024-10-29T20:49:13Z">
+           10/29/24 (Tue) 08:49:13 PM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296826.html#q296835" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296835) : true;">
+         296835
+        </a>
+        <a class="arrow-post-options" data-postid="296835" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        Funny t-shirts are always welcome, if you are young, take the opportunity to wear them now, because when you get older, people will judge you for wearing them
+       </div>
+      </div>
+      <br/>
+      <br class="clear"/>
+      <hr/>
+     </div>
+     <div class="delete" style="margin-top: 7px; display: none">
+      Delete Post [
+      <input id="delete_file" name="file" title="Delete file only" type="checkbox">
+       <label for="delete_file">
+        File
+       </label>
+       ]
+       <input autocomplete="off" id="password" name="password" type="hidden">
+        <input name="delete" type="submit" value="Delete"/>
+       </input>
+      </input>
+     </div>
+     <div class="delete" style="clear:both; display: none">
+      <label for="reason">
+       Reason
+      </label>
+      <input id="reason" maxlength="30" name="reason" size="20" type="text">
+       <input name="report" style="margin-left: 3px; margin-top: 4px" type="submit" value="Report"/>
+      </input>
+     </div>
+    </input>
+   </form>
+   <a href="/b/index.html">
+    [Return]
+   </a>
+   <a href="/b/catalog" style="margin-left: 3px">
+    [Catalog]
+   </a>
+   <div class="boardlist bottom">
+    [
+    <a href="/rules.html">
+     Rules
+    </a>
+    /
+    <a href="/faq.html">
+     FAQ
+    </a>
+    ]  [
+    <a href="/meta/index.html">
+     meta
+    </a>
+    /
+    <a href="/b/index.html">
+     b
+    </a>
+    /
+    <a href="/media/index.html">
+     media
+    </a>
+    /
+    <a href="/img/index.html">
+     img
+    </a>
+    /
+    <a href="/feels/index.html">
+     feels
+    </a>
+    /
+    <a href="/hb/index.html">
+     hb
+    </a>
+    /
+    <a href="/x/index.html">
+     x
+    </a>
+    ]
+   </div>
+   <footer>
+    <p class="unimportant" style="text-align:center;">
+     <img src="/static/footer.gif"/>
+    </p>
+   </footer>
+   <script src="/js/poll.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+    ready();
+   </script>
+   <img class="halloween tree" src="/static/tree.png" style="display: none;"/>
+   <img align="right" class="halloween graves" size="60%" src="/static/hill.png" style="display: none;"/>
+  </hr>
+ </body>
+</html>

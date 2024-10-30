@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <link href="/stylesheets/style.css" media="screen" rel="stylesheet"/>
+  <link href="/stylesheets/custom.css" media="screen" rel="stylesheet"/>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="width=device-width, initial-scale=1, user-scalable=yes" name="viewport"/>
+  <meta content="crystal.cafe,crystalcafe,cc chan,feminism,girls,women,anonymous community," name="keywords"/>
+  <link href="/stylesheets/font-awesome/css/font-awesome.min.css" media="screen" rel="stylesheet"/>
+  <script type="text/javascript">
+   var configRoot="/";
+  </script>
+  <script src="/main.js?v=1" type="text/javascript">
+  </script>
+  <title>
+   /b/ - Random
+  </title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js">
+  </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+  </script>
+  <script>
+   $( function() {    $( "#accordion" ).accordion();  } );
+  </script>
+ </head>
+ <body>
+  <div class="boardlist">
+   [
+   <a href="/rules.html">
+    Rules
+   </a>
+   /
+   <a href="/faq.html">
+    FAQ
+   </a>
+   ]  [
+   <a href="/meta/index.html">
+    meta
+   </a>
+   /
+   <a href="/b/index.html">
+    b
+   </a>
+   /
+   <a href="/media/index.html">
+    media
+   </a>
+   /
+   <a href="/img/index.html">
+    img
+   </a>
+   /
+   <a href="/feels/index.html">
+    feels
+   </a>
+   /
+   <a href="/hb/index.html">
+    hb
+   </a>
+   /
+   <a href="/x/index.html">
+    x
+   </a>
+   ]
+  </div>
+  <a href="/" style="display: block; margin: 20px auto 0 auto; width: 300px">
+   <img alt="" class="banner" src="/rotatingbanner"/>
+  </a>
+  <header>
+   <h1>
+    /b/ - Random
+   </h1>
+   <div class="subtitle">
+   </div>
+  </header>
+  <div class="banner">
+   Posting mode: Reply
+   <a class="unimportant" href="/b/index.html">
+    [Return]
+   </a>
+  </div>
+  <form action="/post.php" enctype="multipart/form-data" method="post" name="post" onsubmit="return dopost(this);">
+   <div style="display:none">
+    <input name="ia7qgwo0nv6xm5fbk2z14p83tlrjcy9hd" type="text" value="7E[@kbt|L"/>
+   </div>
+   <input name="thread" type="hidden" value="296812"/>
+   <input name="search" type="hidden" value="y'h{}.YAg\8_H$tEp6)2DNvC/|0wzFudePZ&lt;Xf1O[]%;9~4STxjQklb`!MR:ao,"/>
+   <input name="board" type="hidden" value="b"/>
+   <input name="onj19tzp2u5ya" style="display:none" type="text" value="90893"/>
+   <table>
+    <tr>
+     <th>
+      Name
+      <textarea name="vnjft481qp" style="display:none">5{M*u_od]HX1Qa\p?I+wx9Ty!Y~:@JmG }A^Ke3lEr&gt;jhU`2[k$Og&lt;8V6WPBs&amp;%C;i,-74zSN'#Z</textarea>
+     </th>
+     <td>
+      <input autocomplete="turnoff" maxlength="35" name="name" placeholder="Anonymous" size="25" title="Only use this field with good reason" type="text"/>
+      <textarea name="firstname" style="display:none">:)k0FG&amp;</textarea>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Email
+      <input name="login" type="hidden" value="62389"/>
+     </th>
+     <td>
+      <input autocomplete="turnoff" maxlength="40" name="email" size="25" title="Only use this field if you wish to be contacted" type="text"/>
+      <input accesskey="s" name="post" style="margin-left:2px;" type="submit" value="Post Reply">
+       <input name="user" type="hidden" value=""/>
+      </input>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Message
+      <input name="0jc62aqh4zoxd9" type="hidden" value=""/>
+     </th>
+     <td>
+      <textarea cols="35" id="body" name="body" rows="5"></textarea>
+     </td>
+     <td class="post-formatting-info">
+      <p style="font-size:10px; color:#89A">
+       *Text* =&gt;
+       <i>
+        Text
+       </i>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       **Text** =&gt;
+       <b>
+        Text
+       </b>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       ***Text*** =&gt;
+       <b>
+        <i>
+         Text
+        </i>
+       </b>
+      </p>
+      <p style="font-size:10px; color:#89A">
+       [spoiler]Text[/spoiler] =&gt;
+       <span class="spoiler">
+        Text
+       </span>
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Image
+     </th>
+     <td>
+      <input name="file" type="file"/>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Direct Link
+     </th>
+     <td>
+      <div style="float:none;text-align:left">
+       <label for="file_url">
+        YouTube
+       </label>
+       <input autocomplete="turnoff" maxlength="120" name="embed" size="35" style="display:inline" type="text"/>
+      </div>
+      <div style="float:none;text-align:left">
+       <label for="file_url">
+        Imgur
+       </label>
+       <input id="file_url" name="file_url" size="35" style="display:inline" type="text"/>
+      </div>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      Options
+     </th>
+     <td>
+      <input id="spoiler" name="spoiler" type="checkbox"/>
+      NSFW image
+      <br/>
+      <input id="sage" name="sage" type="checkbox"/>
+      Sage
+      <span class="sage-tip">
+       (thread won't be bumped)
+      </span>
+     </td>
+    </tr>
+   </table>
+   <input name="hash" type="hidden" value="6b35acb5d138be2fa04634330ae86477c964bbb9"/>
+   <input autocomplete="turnoff" name="password" type="hidden"/>
+  </form>
+  <script type="text/javascript">
+   rememberStuff();
+  </script>
+  <hr/>
+  <div class="blotter">
+   <hr/>
+   Check the Catalog before making a new thread.
+   <hr/>
+   Do not respond to maleposters. See Rule 7.
+   <hr/>
+   <span style="font-size: 125%">
+    Please read
+    <a href="/rules.html">
+     the rules
+    </a>
+    !
+    <b>
+     Last update: 04/27/2021
+    </b>
+   </span>
+  </div>
+  <hr>
+   <form action="/post.php" method="post" name="postcontrols">
+    <input name="board" type="hidden" value="b">
+     <div id="thread_296812">
+      <p class="fileinfo">
+       <a href="/b/src/1730111798262.jpg" title="Screenshot_20241028-113332_Chrome.jpg (24.52 KB, 459x461)">
+        Screenshot_2024102…
+       </a>
+      </p>
+      <a href="/b/src/1730111798262.jpg" target="_blank">
+       <img alt="" class="post-image swiftype" loading="lazy" src="/b/thumb/1730111798262.jpg" style="width:339px;height:340px"/>
+      </a>
+      <div class="post op">
+       <p class="intro" id="296812">
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296812.html#296812" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296812) : true;" title="10/28/24 (Mon) 10:36:38 AM">
+          <time datetime="2024-10-28T10:36:38Z">
+           10/28/24 (Mon) 10:36:38 AM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296812.html#q296812" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296812) : true;">
+         296812
+        </a>
+        <a class="arrow-post-options" data-postid="296812" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        <span class="quote">
+         &gt;read shampoo bottle
+        </span>
+        <br>
+         <span class="quote">
+          &gt;very mild shampoo with natural ingridients that doesnt dry out the hair
+         </span>
+         <br/>
+         <span class="quote">
+          &gt;use shampoo
+         </span>
+         <br/>
+         <span class="quote">
+          &gt;hair gets dry and frizzy as fuck
+         </span>
+        </br>
+       </div>
+      </div>
+      <div class="post reply" id="reply_296815">
+       <p class="intro" id="296815">
+        <!-- <input type="checkbox" class="delete" name="delete_296815" id="delete_296815" /> -->
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296812.html#296815" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296815) : true;" title="10/28/24 (Mon) 12:21:02 PM">
+          <time datetime="2024-10-28T12:21:02Z">
+           10/28/24 (Mon) 12:21:02 PM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296812.html#q296815" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296815) : true;">
+         296815
+        </a>
+        <a class="arrow-post-options" data-postid="296815" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <div class="body">
+        Do you use conditioner? How much shampoo do you apply per wash? Do you have a water filter installed?
+       </div>
+      </div>
+      <br/>
+      <div class="post reply" id="reply_296834">
+       <p class="intro" id="296834">
+        <!-- <input type="checkbox" class="delete" name="delete_296834" id="delete_296834" /> -->
+        <span>
+         <span class="name">
+          Anonymous
+         </span>
+         <a class="post_no date-link" href="/b/res/296812.html#296834" onclick="return document.querySelectorAll('div.banner').length ? highlightReply(296834) : true;" title="10/29/24 (Tue) 06:18:38 PM">
+          <time datetime="2024-10-29T18:18:38Z">
+           10/29/24 (Tue) 06:18:38 PM
+          </time>
+         </a>
+        </span>
+        <a class="post_no" href="/b/res/296812.html#q296834" onclick="return document.querySelectorAll('div.banner').length ? citeReply(296834) : true;">
+         296834
+        </a>
+        <a class="arrow-post-options" data-postid="296834" href="javascript:;">
+         <i class="fa fa-angle-down post-arrow">
+         </i>
+        </a>
+       </p>
+       <p class="fileinfo reply">
+        <a href="/b/src/1730225918628.jpeg" title="IMG_5843.jpeg (243.41 KB, 731x926)">
+         IMG_5843.jpeg
+        </a>
+       </p>
+       <a href="/b/src/1730225918628.jpeg" target="_blank">
+        <img alt="" class="post-image" loading="lazy" src="/b/thumb/1730225918628.jpeg" style="width:217px;height:275px"/>
+       </a>
+       <div class="body">
+        <a href="/b/res/296812.html#296812" onclick="highlightReply('296812');">
+         &gt;&gt;296812
+        </a>
+        <br/>
+        I feel like leave in + hair oil cured this for me
+        <br/>
+        Big fan of picrel
+       </div>
+      </div>
+      <br/>
+      <br class="clear"/>
+      <hr/>
+     </div>
+     <div class="delete" style="margin-top: 7px; display: none">
+      Delete Post [
+      <input id="delete_file" name="file" title="Delete file only" type="checkbox">
+       <label for="delete_file">
+        File
+       </label>
+       ]
+       <input autocomplete="off" id="password" name="password" type="hidden">
+        <input name="delete" type="submit" value="Delete"/>
+       </input>
+      </input>
+     </div>
+     <div class="delete" style="clear:both; display: none">
+      <label for="reason">
+       Reason
+      </label>
+      <input id="reason" maxlength="30" name="reason" size="20" type="text">
+       <input name="report" style="margin-left: 3px; margin-top: 4px" type="submit" value="Report"/>
+      </input>
+     </div>
+    </input>
+   </form>
+   <a href="/b/index.html">
+    [Return]
+   </a>
+   <a href="/b/catalog" style="margin-left: 3px">
+    [Catalog]
+   </a>
+   <div class="boardlist bottom">
+    [
+    <a href="/rules.html">
+     Rules
+    </a>
+    /
+    <a href="/faq.html">
+     FAQ
+    </a>
+    ]  [
+    <a href="/meta/index.html">
+     meta
+    </a>
+    /
+    <a href="/b/index.html">
+     b
+    </a>
+    /
+    <a href="/media/index.html">
+     media
+    </a>
+    /
+    <a href="/img/index.html">
+     img
+    </a>
+    /
+    <a href="/feels/index.html">
+     feels
+    </a>
+    /
+    <a href="/hb/index.html">
+     hb
+    </a>
+    /
+    <a href="/x/index.html">
+     x
+    </a>
+    ]
+   </div>
+   <footer>
+    <p class="unimportant" style="text-align:center;">
+     <img src="/static/footer.gif"/>
+    </p>
+   </footer>
+   <script src="/js/poll.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+    ready();
+   </script>
+   <img class="halloween tree" src="/static/tree.png" style="display: none;"/>
+   <img align="right" class="halloween graves" size="60%" src="/static/hill.png" style="display: none;"/>
+  </hr>
+ </body>
+</html>
