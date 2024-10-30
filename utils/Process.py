@@ -35,8 +35,15 @@ class Process:
             url = self.puller.get_url()
             page = requests.get(url, stream=True)  
             soup = self.make_soup_object(page)
-            id = soup.find(class_="intro").get("id")
-            self.make_thread_directory(id)
+            
+            intro_element = soup.find(class_="intro")
+            
+            if intro_element is not None:
+                threadNumber = intro_element.get("id")
+                self.make_thread_directory(threadNumber)
+                
+            else:
+                threadNumber = soup.find(class_="intro").get("id")
 
             # HTML file
             thread = HTMLCollector(soup, self.thread_folder_path)
