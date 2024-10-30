@@ -43,7 +43,8 @@ class Process:
                 self.make_thread_directory(threadNumber)
                 
             else:
-                threadNumber = soup.find(class_="intro").get("id")
+                self.puller.next_url()
+                continue
 
             # HTML file
             thread = HTMLCollector(soup, self.thread_folder_path)
