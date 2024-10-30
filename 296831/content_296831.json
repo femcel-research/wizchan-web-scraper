@@ -1,4 +1,9 @@
 {
    "thread number": "296831",
-   "original post": "Anonymous 10/29/24 (Tue) 10:11:22 AM296831What did you eat for dinner last night?"
+   "original post": {
+      "post id": "296831",
+      "username": "Anonymous",
+      "date posted": "10/29/24 (Tue) 10:11:22 AM",
+      "post content": "What did you eat for dinner last night?"
+   }
 }

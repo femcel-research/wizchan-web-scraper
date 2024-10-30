@@ -1,12 +1,21 @@
 {
    "thread number": "296812",
-   "original post": "Anonymous 10/28/24 (Mon) 10:36:38 AM296812>read shampoo bottle>very mild shampoo with natural ingridients that doesnt dry out the hair>use shampoo>hair gets dry and frizzy as fuck",
+   "original post": {
+      "post id": "296812",
+      "username": "Anonymous",
+      "date posted": "10/28/24 (Mon) 10:36:38 AM",
+      "post content": ">read shampoo bottle>very mild shampoo with natural ingridients that doesnt dry out the hair>use shampoo>hair gets dry and frizzy as fuck"
+   },
    "reply_296815": {
-      "reply id": "reply_296815",
-      "content": "Anonymous 10/28/24 (Mon) 12:21:02 PM296815Do you use conditioner? How much shampoo do you apply per wash? Do you have a water filter installed?"
+      "reply id": "296815",
+      "username": "Anonymous",
+      "date posted": "10/28/24 (Mon) 12:21:02 PM",
+      "post content": "Do you use conditioner? How much shampoo do you apply per wash? Do you have a water filter installed?"
    },
    "reply_296834": {
-      "reply id": "reply_296834",
-      "content": "Anonymous 10/29/24 (Tue) 06:18:38 PM296834 IMG_5843.jpeg >>296812I feel like leave in + hair oil cured this for meBig fan of picrel"
+      "reply id": "296834",
+      "username": "Anonymous",
+      "date posted": "10/29/24 (Tue) 06:18:38 PM",
+      "post content": ">>296812I feel like leave in + hair oil cured this for meBig fan of picrel"
    }
 }
