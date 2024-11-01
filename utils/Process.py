@@ -36,6 +36,21 @@ class Process:
         os.makedirs("./data/" + id +"/" + scan_path,exist_ok = True)
         return "./data/" + id +"/" + scan_path
 
+    def get_latest_folder(self, id):
+        thread_folder_path = "./data/" + id
+        folder_list = os.listdir(thread_folder_path)
+
+        latest_folder = None
+        latest_timestamp = datetime.min
+
+        for folder in folder_list:
+            folder_date = datetime.strptime(folder, '%Y-%m-%dT%H:%M:%S')
+            if folder_date > latest_timestamp:
+                latest_timestamp = folder_date
+                latest_folder = folder
+        
+        return latest_folder
+
     def check_thread_id(self, id):
         """Return True if a folder for the specified ID does NOT exist"""
         if(os.path.exists("./data/" + id )):
@@ -45,7 +60,9 @@ class Process:
         
     def check_scan(self, page, id):
         """Return True if the most recent scan is NOT up-to-date, False if it's up-to-date"""
-        meta_path = "./data/" + id + "/meta_" + id + ".json"
+        # TODO: Check to see if there is a latest scan folder, then:
+        latest_folder = self.get_latest_folder(id)
+        meta_path = "./data/" + id + "/" + latest_folder + "/meta_" + id + ".json"
         if(os.path.exists(meta_path)):
             with open(meta_path) as json_file:
                 data = json.load(json_file)
@@ -58,10 +75,7 @@ class Process:
                 original_date=False,
                 outputformat="%Y-%m-%d %H:%M:%S",
             )
-            
-            # previous_update_date = https://stackoverflow.com/questions/54491156/validate-json-data-using-python
-                # Look at the thread directory, look at most recent scan folder, check json metadata update date
-
+            # Look at the thread directory, look at most recent scan folder, check json metadata update date
 
             if update_date is previous_update_date:
                 return False
