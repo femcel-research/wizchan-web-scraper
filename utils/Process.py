@@ -53,27 +53,38 @@ class Process:
         # Check to see if there is a data file
         partial_data_path = "./data/" + id + "/"
         scan_data_path = "./data/" + id + "/" + "meta_" + id + ".json"
+        
+        # If the scan data file does not exist, create it and return True
         if(os.path.exists(scan_data_path) == False):
             self.update_scan_data_file(page, partial_data_path)
             return True
-        else:
-            with open(scan_data_path) as json_file:
-                data = json.load(json_file)
-            previous_update_date = data["date updated"]
+    
+        with open(scan_data_path) as json_file:
+            data = json.load(json_file)
+        
+        previous_update_date = datetime.strptime(data["date updated"], "%Y-%m-%d %H:%M:%S")
 
-            update_date = find_date(
-                # Assigns update_date to the update date of page (the page being checked)
-                page.content,
-                extensive_search=False,
-                original_date=False,
-                outputformat="%Y-%m-%d %H:%M:%S",
-            )
-            
-            # Look at the thread directory, look at most recent scan folder, check json metadata update date
-            if update_date is previous_update_date:
-                return False
-            else:
-                return True
+        update_date = find_date(
+            # Assigns update_date to the update date of page (the page being checked)
+            page.content,
+            extensive_search=False,
+            original_date=False,
+            outputformat="%Y-%m-%d %H:%M:%S",
+        )
+        update_date = datetime.strptime(update_date, "%Y-%m-%d %H:%M:%S")
+
+        print("Update date for " + id)
+        print(update_date)
+        print("Previous update date for " + id)
+        print(previous_update_date)
+
+        if update_date == previous_update_date:
+            print("Match means no folder")
+            return False
+        
+        elif update_date != previous_update_date:
+            print("No match means folder")
+            return True
 
     def process_current_list(self):
         """For each URL in the list, get thread HTML, metadata JSON, and content JSON"""
@@ -85,7 +96,7 @@ class Process:
             
             intro_element = soup.find(class_="intro")
             
-            if intro_element is not None:
+            if intro_element is not None:  # If not 404
                 id = intro_element.get("id")
                 if self.check_thread_id(id): # return True if no thread ID folder
                     self.make_thread_directory(id)
@@ -106,7 +117,9 @@ class Process:
 
                     # Add URL to list of processed URLs
                     self.log_processed_url(url)
-                    # self.update_scan_data_file(page)
+
+                    print("Generated scan for " + id)
+                    
 
 
             
