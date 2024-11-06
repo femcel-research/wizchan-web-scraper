@@ -58,12 +58,17 @@ class TextCollector:
         
         
         for reply in self.postReplies:
-             reply_content = {
+            reply_body = reply.find(class_= "body")
+            links_to_other_posts = reply_body.find('a', {'onclick': True})
+            
+            reply_content = {
                  "reply id": reply.find(class_="intro").get("id"),
+                 "Link to replied post": links_to_other_posts.get("href") if links_to_other_posts is not None else None,
                  "username":  reply.find(class_="name").get_text(),
                  "date posted": reply.find(class_="post_no date-link").get("title"),
-                 "post content": reply.find(class_="body").get_text()
+                 "post content": reply_body.get_text()
              }
-             threadContents[reply["id"]] = reply_content
+            
+            threadContents[reply["id"]] = reply_content
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(threadContents, f, indent=3, ensure_ascii=False)
