@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import os
+import re 
+  
 class TextCollector:
     #TODO maybe save relevant text as .JSON?
     
@@ -47,23 +49,35 @@ class TextCollector:
             "thread number": self.threadNumber,
         }
         
+        
+        original_post_body = self.originalPost.find(class_="body")
+        links_to_other_posts = original_post_body.find_all('a', attrs={'href': re.compile("^/")})
+        links = []
+        
         original_content = {
             "post id": self.originalPost.find(class_="intro").get("id"),
             "username":  self.originalPost.find(class_="name").get_text(),
+            "reply to another thread?": True if links else False,
             "date posted": self.originalPost.find(class_="post_no date-link").get("title"),
-            "post content": self.originalPost.find(class_="body").get_text() 
+            "post content": original_post_body.get_text() 
         }
+        
+        if links:
+            original_content["replied thread links"] = links
         
         threadContents["original post"] = original_content
         
         
         for reply in self.postReplies:
-            reply_body = reply.find(class_= "body")
-            links_to_other_posts = reply_body.find('a', {'onclick': True})
+            reply_body = reply.find('div', class_= "body")
+            links_to_other_posts = reply_body.find_all('a', attrs={'href': re.compile("^/")})
+            links = []
+            for link in links_to_other_posts:
+                links.append(link.get('href'))
             
             reply_content = {
                  "reply id": reply.find(class_="intro").get("id"),
-                 "Link to replied post": links_to_other_posts.get("href") if links_to_other_posts is not None else None,
+                 "replied post links": links,
                  "username":  reply.find(class_="name").get_text(),
                  "date posted": reply.find(class_="post_no date-link").get("title"),
                  "post content": reply_body.get_text()
