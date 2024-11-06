@@ -22,6 +22,10 @@ class Process:
         with open("./data/processed/processed.txt", "a") as file:
             file.write(url + '\n')
 
+    def update_scan_data_file(self, page, path):
+        meta = MetaCollector(page, self.make_soup_object(page), path)
+        (meta.meta_dump())
+
     def make_soup_object(self, page):
         soup = BeautifulSoup(page.content, "html.parser")
         return soup
@@ -33,23 +37,8 @@ class Process:
 
     def make_scan_directory(self, id):
         scan_path = "/" + datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
-        os.makedirs("./data/" + id +"/" + scan_path,exist_ok = True)
+        os.makedirs("./data/" + id + scan_path,exist_ok = True)
         return "./data/" + id +"/" + scan_path
-
-    def get_latest_folder(self, id):
-        thread_folder_path = "./data/" + id
-        folder_list = os.listdir(thread_folder_path)
-
-        latest_folder = None
-        latest_timestamp = datetime.min
-
-        for folder in folder_list:
-            folder_date = datetime.strptime(folder, '%Y-%m-%dT%H:%M:%S')
-            if folder_date > latest_timestamp:
-                latest_timestamp = folder_date
-                latest_folder = folder
-        
-        return latest_folder
 
     def check_thread_id(self, id):
         """Return True if a folder for the specified ID does NOT exist"""
@@ -59,12 +48,16 @@ class Process:
             return True
         
     def check_scan(self, page, id):
-        """Return True if the most recent scan is NOT up-to-date, False if it's up-to-date"""
-        # TODO: Check to see if there is a latest scan folder, then:
-        latest_folder = self.get_latest_folder(id)
-        meta_path = "./data/" + id + "/" + latest_folder + "/meta_" + id + ".json"
-        if(os.path.exists(meta_path)):
-            with open(meta_path) as json_file:
+        """Return True if the most recent scan is NOT up-to-date, False if it's up-to-date;
+        makes a scan data JSON if it doesn't exist already"""
+        # Check to see if there is a data file
+        partial_data_path = "./data/" + id + "/"
+        scan_data_path = "./data/" + id + "/" + "meta_" + id + ".json"
+        if(os.path.exists(scan_data_path) == False):
+            self.update_scan_data_file(page, partial_data_path)
+            return True
+        else:
+            with open(scan_data_path) as json_file:
                 data = json.load(json_file)
             previous_update_date = data["date updated"]
 
@@ -75,8 +68,8 @@ class Process:
                 original_date=False,
                 outputformat="%Y-%m-%d %H:%M:%S",
             )
+            
             # Look at the thread directory, look at most recent scan folder, check json metadata update date
-
             if update_date is previous_update_date:
                 return False
             else:
@@ -113,6 +106,7 @@ class Process:
 
                     # Add URL to list of processed URLs
                     self.log_processed_url(url)
+                    # self.update_scan_data_file(page)
 
 
             
