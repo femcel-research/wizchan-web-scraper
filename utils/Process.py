@@ -75,21 +75,26 @@ class Process:
         )
         update_date = datetime.strptime(update_date, "%Y-%m-%d %H:%M:%S")
 
-        print("Update date for " + id)
+        print("An initial_meta_" + id + ".json exists for thread #" + id)
+        print(" Current update date for " + id + ":")
         print(update_date)
-        print("Previous update date for " + id)
+        print(" Previous update date for " + id + ":")
         print(previous_update_date)
 
         if update_date == previous_update_date:
-            print("Match means no folder")
+            print(" Match means NO folder!")
+            print()
             return False
         
         elif update_date != previous_update_date:
-            print("No match means folder")
+            print(" No match means FOLDER!")
+            self.update_scan_data_file(page, partial_data_path, id)
             return True
 
     def process_current_list(self):
         """For each URL in the list, get thread HTML, metadata JSON, and content JSON"""
+
+        print("ˋˏ-༻❁༺-ˎˊSTARTING SCANSˋˏ-༻❁༺-ˎˊ")
 
         for url in self.url_list:
             # Gets page from URL and makes a new directory for the thread
@@ -120,7 +125,8 @@ class Process:
                     # Add URL to list of processed URLs
                     self.log_processed_url(url)
 
-                    print("Generated scan for " + id)
+                    print(" Generated scan for thread #" + id)
+                    print()
                     
 
 
