@@ -88,6 +88,7 @@ class Process:
         
         elif update_date != previous_update_date:
             print(" No match means FOLDER!")
+            print()
             self.update_scan_data_file(page, partial_data_path, id)
             return True
 
@@ -125,7 +126,7 @@ class Process:
                     # Add URL to list of processed URLs
                     self.log_processed_url(url)
 
-                    print(" Generated scan for thread #" + id)
+                    print("Generated scan for thread #" + id)
                     print()
                     
 
