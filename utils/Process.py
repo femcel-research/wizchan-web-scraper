@@ -22,9 +22,11 @@ class Process:
         with open("./data/processed/processed.txt", "a") as file:
             file.write(url + '\n')
 
-    def update_scan_data_file(self, page, path):
+    def update_scan_data_file(self, page, path, id):
         meta = MetaCollector(page, self.make_soup_object(page), path)
         (meta.meta_dump())
+        scan_file_path =  "./data/" + id + "/" + "initial_" + "meta_" + id + ".json" 
+        os.rename(meta.file_path, scan_file_path)
 
     def make_soup_object(self, page):
         soup = BeautifulSoup(page.content, "html.parser")
@@ -52,11 +54,11 @@ class Process:
         makes a scan data JSON if it doesn't exist already"""
         # Check to see if there is a data file
         partial_data_path = "./data/" + id + "/"
-        scan_data_path = "./data/" + id + "/" + "meta_" + id + ".json"
+        scan_data_path = "./data/" + id + "/" + "initial_" + "meta_" + id + ".json"
         
         # If the scan data file does not exist, create it and return True
         if(os.path.exists(scan_data_path) == False):
-            self.update_scan_data_file(page, partial_data_path)
+            self.update_scan_data_file(page, partial_data_path, id)
             return True
     
         with open(scan_data_path) as json_file:
