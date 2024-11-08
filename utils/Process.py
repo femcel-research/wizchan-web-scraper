@@ -54,7 +54,7 @@ class Process:
         makes a scan data JSON if it doesn't exist already"""
         # Check to see if there is a data file
         partial_data_path = "./data/" + id + "/"
-        scan_data_path = "./data/" + id + "/" + "initial_" + "meta_" + id + ".json"
+        scan_data_path = "./data/" + id + "/" + "initial_meta_" + id + ".json"
         
         # If the scan data file does not exist, create it and return True
         if(os.path.exists(scan_data_path) == False):
