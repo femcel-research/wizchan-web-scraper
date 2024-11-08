@@ -25,7 +25,7 @@ class Process:
     def update_scan_data_file(self, page, path, id):
         meta = MetaCollector(page, self.make_soup_object(page), path)
         (meta.meta_dump())
-        scan_file_path =  "./data/" + id + "/" + "initial_" + "meta_" + id + ".json" 
+        scan_file_path =  "./data/" + id + "/" + "initial_meta_" + id + ".json" 
         os.rename(meta.file_path, scan_file_path)
 
     def make_soup_object(self, page):
