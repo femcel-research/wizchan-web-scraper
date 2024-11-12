@@ -55,17 +55,17 @@ class TextCollector:
         links = []
         
         original_content = {
-            "post id": self.originalPost.find(class_="intro").get("id"),
+            "post_id": self.originalPost.find(class_="intro").get("id"),
             "username":  self.originalPost.find(class_="name").get_text(),
-            "reply to another thread?": True if links else False,
-            "date posted": self.originalPost.find(class_="post_no date-link").get("title"),
-            "post content": original_post_body.get_text() 
+            "reply_to_another_thread?": True if links else False,
+            "date_posted": self.originalPost.find(class_="post_no date-link").get("title"),
+            "post_content": original_post_body.get_text() 
         }
         
         if links:
-            original_content["replied thread links"] = links
+            original_content["replied_thread_links"] = links
         
-        threadContents["original post"] = original_content
+        threadContents["original_post"] = original_content
         
         
         for reply in self.postReplies:
@@ -76,11 +76,11 @@ class TextCollector:
                 links.append(link.get('href'))
             
             reply_content = {
-                 "reply id": reply.find(class_="intro").get("id"),
-                 "replied post links": links,
+                 "reply_id": reply.find(class_="intro").get("id"),
+                 "replied_post_links": links,
                  "username":  reply.find(class_="name").get_text(),
-                 "date posted": reply.find(class_="post_no date-link").get("title"),
-                 "post content": reply_body.get_text()
+                 "date_posted": reply.find(class_="post_no date-link").get("title"),
+                 "post_content": reply_body.get_text()
              }
             
             threadContents[reply["id"]] = reply_content

@@ -4,6 +4,7 @@ import json
 import requests
 import datetime
 import os
+import re
 
 
 # add automatic html, meta, thread folders
@@ -43,9 +44,9 @@ class MetaCollector:
         formatted_date = scrape_date.strftime("%Y-%m-%d %H:%M:%S")
 
         dates = {
-            "date published": publish_Date,
-            "date updated": update_Date,
-            "date scraped": formatted_date,
+            "date_published": publish_Date,
+            "date_updated": update_Date,
+            "date_scraped": formatted_date,
         }
 
         return dates
@@ -56,6 +57,14 @@ class MetaCollector:
         # page = requests.get(self.URL, stream=True)
         page = self.page
         # soup = BeautifulSoup(page.content, "html.parser")
+        
+        # Splits board and thread title
+        page_title = self.soup.title.string
+        board_and_title = re.split('[-]',page_title)
+        for x in range(len(board_and_title)):
+            board_and_title[x] = board_and_title[x].strip()
+        board = board_and_title[0]
+        title = board_and_title[1]
 
         # If meta keywords has content create a variable with that content, otherwise set to empty string
         meta_keywords = self.soup.find("meta", attrs={"name": "keywords"})
@@ -64,17 +73,11 @@ class MetaCollector:
         else:
             keywords = ""
 
-        # If meta description has content create a variable with that content, otherwise set to empty string
-        meta_description = self.soup.find("meta", attrs={"name": "description"})
-        if meta_description:
-            description = meta_description["content"]
-        else:
-            description = ""
-
         info = {
             "URL": page.url,
-            "board": self.soup.title.string,  # for cc its safe to assume each title will be the board name
-            "thread number": self.soup.find(class_="intro").get("id"),
+            "board": board,
+            "thread_title":title,# for cc its safe to assume each title will be the board name
+            "thread_number": self.soup.find(class_="intro").get("id"),
             "description": description,
             "keywords": keywords,
         }

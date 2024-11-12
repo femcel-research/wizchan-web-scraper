@@ -64,7 +64,7 @@ class Process:
         with open(scan_data_path) as json_file:
             data = json.load(json_file)
         
-        previous_update_date = datetime.strptime(data["date updated"], "%Y-%m-%d %H:%M:%S")
+        previous_update_date = datetime.strptime(data["date_updated"], "%Y-%m-%d %H:%M:%S")
 
         update_date = find_date(
             # Assigns update_date to the update date of page (the page being checked)
