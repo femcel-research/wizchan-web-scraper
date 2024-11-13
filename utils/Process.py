@@ -38,7 +38,7 @@ class Process:
         os.makedirs(thread_folder_path, exist_ok=True)
 
     def make_scan_directory(self, id):
-        scan_path = "/" + datetime.today().strftime('%Y-%m-%dT%H:%M:%S')
+        scan_path = "/" + datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
         os.makedirs("./data/" + id + scan_path,exist_ok = True)
         return "./data/" + id +"/" + scan_path
 
@@ -64,22 +64,22 @@ class Process:
         with open(scan_data_path) as json_file:
             data = json.load(json_file)
         
-        previous_update_date = datetime.strptime(data["date_updated"], "%Y-%m-%d %H:%M:%S")
+        previous_update_date = datetime.strptime(data["date_updated"], "%Y-%m-%dT%H:%M:%S")
 
         update_date = find_date(
             # Assigns update_date to the update date of page (the page being checked)
             page.content,
             extensive_search=False,
             original_date=False,
-            outputformat="%Y-%m-%d %H:%M:%S",
+            outputformat="%Y-%m-%dT%H:%M:%S",
         )
-        update_date = datetime.strptime(update_date, "%Y-%m-%d %H:%M:%S")
+        update_date = datetime.strptime(update_date, "%Y-%m-%dT%H:%M:%S")
 
         print("An initial_meta_" + id + ".json exists for thread #" + id)
         print(" Current update date for " + id + ":")
-        print(update_date)
+        print(update_date.strftime("%Y-%m-%dT%H:%M:%S"))
         print(" Previous update date for " + id + ":")
-        print(previous_update_date)
+        print(previous_update_date.strftime("%Y-%m-%dT%H:%M:%S"))
 
         if update_date == previous_update_date:
             print(" Match means NO folder!")
