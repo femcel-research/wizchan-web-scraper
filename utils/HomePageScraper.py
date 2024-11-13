@@ -4,6 +4,7 @@ import json
 import requests
 import datetime
 import os
+from utils import SiteMetaCollector
 
 class HomePageScraper:
     """Makes a list of urls from homepage"""
@@ -11,8 +12,12 @@ class HomePageScraper:
     def __init__(self, url):
         self.page = requests.get(url, stream=True)  
         self.soup = BeautifulSoup(self.page.content, "html.parser")
-
         self.url_list = []
+        
+        # JSON sitewide metadata file
+        site_meta = SiteMetaCollector(self.page, self.soup, "./data/")
+        (site_meta.meta_dump())
+
 
     def urls_to_list(self):
         box_right = self.soup.find(class_="box right")

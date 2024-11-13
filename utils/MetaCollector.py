@@ -66,20 +66,11 @@ class MetaCollector:
         board = board_and_title[0]
         title = board_and_title[1]
 
-        # If meta keywords has content create a variable with that content, otherwise set to empty string
-        meta_keywords = self.soup.find("meta", attrs={"name": "keywords"})
-        if meta_keywords:
-            keywords = meta_keywords["content"]
-        else:
-            keywords = ""
-
         info = {
             "URL": page.url,
             "board": board,
             "thread_title":title,# for cc its safe to assume each title will be the board name
             "thread_number": self.soup.find(class_="intro").get("id"),
-            "description": description,
-            "keywords": keywords,
         }
         return info
 
