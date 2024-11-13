@@ -59,7 +59,7 @@ class TextCollector:
             "username":  self.originalPost.find(class_="name").get_text(),
             "reply_to_another_thread?": True if links else False,
             "date_posted": self.originalPost.find(class_="post_no date-link").get("title"),
-            "post_content": original_post_body.get_text() 
+            "post_content": original_post_body.get_text()
         }
         
         if links:
@@ -70,17 +70,27 @@ class TextCollector:
         
         for reply in self.postReplies:
             reply_body = reply.find('div', class_= "body")
+            link_back = reply_body.find('a')
             links_to_other_posts = reply_body.find_all('a', attrs={'href': re.compile("^/")})
+            
+            if link_back is None:
+                content = reply_body.get_text()
+            else:
+                content = reply_body.get_text().strip(link_back.get_text())
+            
+            
             links = []
             for link in links_to_other_posts:
                 links.append(link.get('href'))
+            
+            
             
             reply_content = {
                  "reply_id": reply.find(class_="intro").get("id"),
                  "replied_post_links": links,
                  "username":  reply.find(class_="name").get_text(),
                  "date_posted": reply.find(class_="post_no date-link").get("title"),
-                 "post_content": reply_body.get_text()
+                 "post_content": content
              }
             
             threadContents[reply["id"]] = reply_content

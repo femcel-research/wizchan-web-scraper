@@ -30,18 +30,18 @@ class MetaCollector:
             self.page.content,
             extensive_search=True,
             original_date=True,
-            outputformat="%Y-%m-%d %H:%M:%S",
+            outputformat="%Y-%m-%dT%H:%M:%S",
         )
         update_Date = find_date(
             self.page.content,
             extensive_search=False,
             original_date=False,
-            outputformat="%Y-%m-%d %H:%M:%S",
+            outputformat="%Y-%m-%dT%H:%M:%S",
         )
 
         # Assumption is that each time this func is run during scrape, it will capture the time of scrape
         scrape_date = datetime.datetime.now()
-        formatted_date = scrape_date.strftime("%Y-%m-%d %H:%M:%S")
+        formatted_date = scrape_date.strftime("%Y-%m-%dT%H:%M:%S")
 
         dates = {
             "date_published": publish_Date,
@@ -69,7 +69,7 @@ class MetaCollector:
         info = {
             "URL": page.url,
             "board": board,
-            "thread_title":title,# for cc its safe to assume each title will be the board name
+            "thread_title": title,
             "thread_number": self.soup.find(class_="intro").get("id"),
         }
         return info
