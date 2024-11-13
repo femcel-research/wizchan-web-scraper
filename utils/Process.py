@@ -7,6 +7,7 @@ from utils import HomePageScraper
 import os
 import requests
 import datetime
+import logging
 from datetime import datetime
 from htmldate import find_date
 
@@ -14,8 +15,27 @@ class Process:
     """Takes in a homepage URL then loops through the links on it, 'processing' each one"""
 
     def __init__(self, url):
+        # Logging
+        self.logger = logging.getLogger(__name__)
+        logging.basicConfig(
+            filename=("./data/logs/" + datetime.today().strftime('%Y-%m-%dT%H:%M:%S') + ".log"),
+            filemode="w",
+            format=(datetime.today().strftime('%Y-%m-%dT%H:%M:%S') + " %(levelname)s: %(message)s"),
+            style="%",
+            level=logging.INFO
+        )
+
+        # Get URLs
         self.scraper = HomePageScraper.HomePageScraper(url)
         self.url_list = self.scraper.urls_to_list()
+        
+        # Log message 
+        if (len(self.url_list) <= 0):
+            logging.critical("URL list is empty")
+        else: 
+            logging.info("The following URLs have been scraped")
+            for url in self.url_list:
+                logging.info(url)
 
     def log_processed_url(self, url):
         """Save list of processed URLs to txt file in data/processed"""
@@ -75,30 +95,31 @@ class Process:
         )
         update_date = datetime.strptime(update_date, "%Y-%m-%dT%H:%M:%S")
 
-        print("An initial_meta_" + id + ".json exists for thread #" + id)
-        print(" Current update date for " + id + ":")
-        print(update_date.strftime("%Y-%m-%dT%H:%M:%S"))
-        print(" Previous update date for " + id + ":")
-        print(previous_update_date.strftime("%Y-%m-%dT%H:%M:%S"))
+        # Log message
+        logging.info("An initial_meta_" + id + ".json exists for thread #" + id)
+        logging.info("Current update date for " + id + ": " + str(update_date))
+        logging.info("Previous update date for " + id + ": " + str(previous_update_date))
 
         if update_date == previous_update_date:
-            print(" Match means NO folder!")
-            print()
+            logging.info("Match means NO folder!")  # Log message
+
             return False
         
         elif update_date != previous_update_date:
-            print(" No match means FOLDER!")
-            print()
+            logging.info("No match means FOLDER!")  # Log message
+
             self.update_scan_data_file(page, partial_data_path, id)
             return True
 
     def process_current_list(self):
         """For each URL in the list, get thread HTML, metadata JSON, and content JSON"""
-
-        print("ˋˏ-༻❁༺-ˎˊSTARTING SCANSˋˏ-༻❁༺-ˎˊ")
+        logging.info("Processing the URLs")  # Log message
 
         for url in self.url_list:
             # Gets page from URL and makes a new directory for the thread
+            
+            logging.info("Processing " + url)  # Log message
+
             page = requests.get(url, stream=True)  
             soup = self.make_soup_object(page)
             
@@ -106,9 +127,10 @@ class Process:
             
             if intro_element is not None:  # If not 404
                 id = intro_element.get("id")
-                if self.check_thread_id(id): # return True if no thread ID folder
+                logging.info("Checking against previous scans")  # Log message
+                if self.check_thread_id(id):  # return True if no thread ID folder
                     self.make_thread_directory(id)
-                if self.check_scan(page, id): # return True if not-up-to-date
+                if self.check_scan(page, id):  # return True if not-up-to-date
                     thread_folder_path = self.make_scan_directory(id)
                     
                     # HTML file
@@ -126,8 +148,13 @@ class Process:
                     # Add URL to list of processed URLs
                     self.log_processed_url(url)
 
-                    print("Generated scan for thread #" + id)
-                    print()
+                    logging.info("Generated scan for thread #" + id + "; added to processed.txt")  # Log message
+                    
+            else:
+                logging.warning("Likely 404 error; processing unsuccessful; skipping")  # Log message
+        
+        # Log message
+        logging.info("Fully processed all URLs")
                     
 
 
