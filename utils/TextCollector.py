@@ -86,7 +86,7 @@ class TextCollector:
             
             
             reply_content = {
-                 "reply_id": reply.find(class_="intro").get("id"),
+                 "post_id": reply.find(class_="intro").get("id"),
                  "replied_post_links": links,
                  "username":  reply.find(class_="name").get_text(),
                  "date_posted": reply.find(class_="post_no date-link").get("title"),
