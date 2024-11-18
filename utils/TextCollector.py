@@ -81,13 +81,14 @@ class TextCollector:
             
             links = []
             for link in links_to_other_posts:
-                links.append(link.get('href'))
+                # find_link = link.get('href')
+                links.append(link.text.strip().replace(">>",""))
             
             
             
             reply_content = {
                  "post_id": reply.find(class_="intro").get("id"),
-                 "replied_post_links": links,
+                 "ids_of_replied_posts": links,
                  "username":  reply.find(class_="name").get_text(),
                  "date_posted": reply.find(class_="post_no date-link").get("title"),
                  "post_content": content
