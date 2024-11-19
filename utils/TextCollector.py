@@ -64,7 +64,7 @@ class TextCollector:
         return formatted_dt
 
     def extract_original_post(self):
-        """Retrieves content from original post."""
+        """Outputs content from original post as a dictionary"""
         date = self.extract_datetime(self.originalPost)
         original_post_body = self.originalPost.find(class_="body")
         links_to_other_posts = original_post_body.find_all(
@@ -91,6 +91,7 @@ class TextCollector:
         return original_content
 
     def extract_replies(self):
+        """Outputs replies as a dictionary"""
         replies = {}
         for reply in self.postReplies:
             date = self.extract_datetime(reply)
@@ -128,6 +129,7 @@ class TextCollector:
         return replies
 
     def get_thread_contents(self):
+        """Returns thread contents as a JSON"""
         original_post = self.extract_original_post()
         replies = self.extract_replies()
 
