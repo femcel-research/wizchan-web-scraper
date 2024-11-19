@@ -48,5 +48,8 @@ class SiteMetaCollector (MetaCollector):
         """Dumps website metadata into a JSON file"""
         metadata = {**self.page_info_to_JSON()}
 
+        # self.stat_handler.set_site_value(?)
+        # metadata = ?        
+
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2, ensure_ascii=False)

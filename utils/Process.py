@@ -14,7 +14,7 @@ from string import Template
 
 class Process:
     """Takes in a homepage URL then loops through the links on it, 'processing' each one"""
-    INITIAL_META_PATH = Template("./data/$t/initial_meta_$t.json")  # $t for thread id
+    THREAD_META_PATH = Template("./data/$t/thread_meta_$t.json")  # $t for thread id
     THREAD_FOLDER_PATH = Template("./data/$t")  # $t for thread id
     SCAN_FOLDER_PATH = Template("./data/$t/" + datetime.today().strftime("%Y-%m-%dT%H:%M:%S"))  # $t for thread id
 
@@ -50,15 +50,14 @@ class Process:
         soup = BeautifulSoup(page.content, "html.parser")
         return soup
 
-    def make_thread_initial_meta(self, page, id):  # TODO: Rework depending on what meta file it is
+    def make_thread_meta(self, page, id):  # TODO: Rework depending on what meta file it is
         """Calls the same meta_dump() that's used for each scan, using INITIAL_META_PATH"""
-        meta = MetaCollector(page, self.make_soup_object(page), "./data/" + id + "/")
-        (meta.meta_dump())
-        os.rename(meta.file_path, self.INITIAL_META_PATH.substitute(t = id) )  # Renames the normal meta_dump() instead of calling a different method
+        meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
+        (meta.meta_dump(True))
+        # Maybe make call an overloaded dump method? Then have a separate method to update just the thread update_date
         
     def make_scan_files(self, page, soup, url, id):
         # JSON thread metadata file
-        self.make_thread_initial_meta(page, id)
         os.makedirs(self.SCAN_FOLDER_PATH.substitute(t = id), exist_ok = True)  # Make scan @ current time folder
 
         # HTML current scan file
@@ -66,12 +65,14 @@ class Process:
         (thread.saveHTML())
 
         # JSON current scan metadata file
-        meta = MetaCollector(page, soup, self.SCAN_FOLDER_PATH.substitute(t = id))
-        (meta.meta_dump())
+        meta = MetaCollector(page, soup, self.SCAN_FOLDER_PATH.substitute(t = id), False)
+        (meta.meta_dump(False))
 
         # JSON current scan thread content file
         content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
         (content.write_thread())
+
+        self.make_thread_meta(page, id)
 
         # Add URL to list of processed URLs
         self.log_processed_url(url)
@@ -80,15 +81,15 @@ class Process:
 
     def check_thread_folder(self, id):
         """Return True if a folder for the specified ID exists"""
-        if(os.path.exists("./data/" + id )):
+        if(os.path.exists(self.THREAD_FOLDER_PATH.substitute(t = id))):
             logging.info("A thread folder for thread #" + id + " exists")
             return True
         else: 
             return False
         
-    def check_thread_initial_meta(self, id):
+    def check_thread_meta(self, id):
         """Return True if an initial_meta file for the specified ID exists"""
-        if(os.path.exists(self.INITIAL_META_PATH.substitute(t = id))):
+        if(os.path.exists(self.THREAD_META_PATH.substitute(t = id))):
            logging.info("An initial_meta_" + id + ".json exists for thread #" + id)
            return True
         else:
@@ -96,7 +97,7 @@ class Process:
 
     def check_date_updated(self, page, id):
         """Return True if update_date in initial_meta matches current update_date"""
-        with open(self.INITIAL_META_PATH.substitute(t = id)) as json_file:
+        with open(self.THREAD_META_PATH.substitute(t = id)) as json_file:
             data = json.load(json_file)
         
         previous_update_date = datetime.strptime(data["date_updated"], "%Y-%m-%dT%H:%M:%S")
@@ -136,8 +137,7 @@ class Process:
                 logging.info("Checking against previous scans")  # Log message
                 if not self.check_thread_folder(id):  # return True if there is a thread ID folder
                     os.makedirs(self.THREAD_FOLDER_PATH.substitute(t = id), exist_ok=True)  # if False, make thread ID folder
-                if not self.check_thread_initial_meta(id):  # return True if there is an initial_meta file for the thread
-                    self.make_thread_initial_meta(page, id)  # if False, make initial_meta and scan normally
+                if not self.check_thread_meta(id):  # return True if there is an initial_meta file for the thread
                     self.make_scan_files(page, soup, url, id)
                 else: 
                     if not self.check_date_updated(page, id):  # return True if previous scan up-to-date
