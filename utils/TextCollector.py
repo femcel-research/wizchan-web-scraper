@@ -16,8 +16,7 @@ class TextCollector:
         self.threadIntro = soup.find(class_="intro")
         self.threadNumber = soup.find(class_="intro").get("id")
 
-        # Finds the first instance of a page element with the class "body".
-        # Within a specific thread page, this most likely be the original thread.
+        # Returns original post.
         self.originalPost = soup.find(class_="post op")
 
         # Variable holds the ID of the original post.
@@ -25,13 +24,8 @@ class TextCollector:
 
         # Finds every page element with the class "post reply" and returns it in an array.
         self.postReplies = soup.find_all(class_="post reply")
-
-        # Returns an array containing the ID for each reply.
-        postReplyIds = [reply["id"] for reply in self.postReplies]
-
-        # Returns imageboard name
-        board = soup.header.h1.get_text()
-
+        
+        # Directory variables
         self.folder_path = folder_path
         self.file_name = "content_" + self.threadNumber + ".json"
         self.file_path = os.path.join(self.folder_path, self.file_name)
@@ -67,10 +61,7 @@ class TextCollector:
         """Outputs content from original post as a dictionary"""
         date = self.extract_datetime(self.originalPost)
         original_post_body = self.originalPost.find(class_="body")
-        links_to_other_posts = original_post_body.find_all(
-            "a", attrs={"href": re.compile("^/")}
-        )
-
+        links_to_other_posts = self.extract_replied_posts_ids(original_post_body)
         links = []
 
         original_content = {
@@ -82,13 +73,24 @@ class TextCollector:
             "post_content": self.extract_text(original_post_body),
         }
 
+        # Removes double arrows from in-post reference to replied post
         if links_to_other_posts:
             for link in links_to_other_posts:
-                links.append(link.get_text().strip().replace(">>", ""))
+                links.append(link.strip().replace(">>", ""))
 
         # If the original post is a reply to a different thread, add new dictionary entry.
-        original_content["replied_thread_links"] = links
+        original_content["replied_thread_ids"] = links
         return original_content
+
+    def extract_replied_posts_ids(self, post):
+        """Extracts the ID of a post a user replies to."""
+        links_to_other_posts = post.find_all("a", attrs={"href": re.compile("^/")})
+        # Array that houses reply ids to other posts.
+        links = []
+        for link in links_to_other_posts:
+            links.append(link.text.strip().replace(">>", ""))
+
+        return links
 
     def extract_replies(self):
         """Outputs replies as a dictionary"""
@@ -96,24 +98,16 @@ class TextCollector:
         for reply in self.postReplies:
             date = self.extract_datetime(reply)
             reply_body = reply.find("div", class_="body")
-            link_back = reply_body.find_all("a")
-            links_to_other_posts = reply_body.find_all(
-                "a", attrs={"href": re.compile("^/")}
-            )
+            links = self.extract_replied_posts_ids(reply_body)
 
             # If there is no link to another post, content is as usual. Otherwise, strip the link from the text.
-            if link_back is not None:
+            if links is not None:
                 text = self.extract_text(reply_body)
-                for link in link_back:
-                    text = text.replace(link.get_text(), "")
+                for link in links:
+                    text = text.replace(">>" + link, "")
                 content = text.strip()
             else:
                 content = self.extract_text(reply_body)
-
-            # Array that houses reply ids to other posts.
-            links = []
-            for link in links_to_other_posts:
-                links.append(link.text.strip().replace(">>", ""))
 
             # Dictionary housing reply content.
             reply_content = {
