@@ -1,13 +1,13 @@
 import json
+import os
+import requests
+import datetime
+import logging
 from bs4 import BeautifulSoup
 from utils import HTMLCollector
 from utils import MetaCollector
 from utils import TextCollector
 from utils import HomePageScraper
-import os
-import requests
-import datetime
-import logging
 from datetime import datetime
 from htmldate import find_date
 from string import Template
@@ -49,12 +49,6 @@ class Process:
     def make_soup_object(self, page):  # TODO: Can probably delete when make_thread_initial_meta is reworked
         soup = BeautifulSoup(page.content, "html.parser")
         return soup
-
-    def make_thread_meta(self, page, id):  # TODO: Rework depending on what meta file it is
-        """Calls the same meta_dump() that's used for each scan, using INITIAL_META_PATH"""
-        meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
-        (meta.meta_dump(True))
-        # Maybe make call an overloaded dump method? Then have a separate method to update just the thread update_date
         
     def make_scan_files(self, page, soup, url, id):
         # JSON thread metadata file
@@ -72,7 +66,10 @@ class Process:
         content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
         (content.write_thread())
 
-        self.make_thread_meta(page, id)
+        # JSON thread scan metadata
+        thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
+        (thread_meta.meta_dump(True))
+
 
         # Add URL to list of processed URLs
         self.log_processed_url(url)
