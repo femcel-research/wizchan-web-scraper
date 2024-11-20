@@ -84,7 +84,7 @@ class MetaCollector:
         return info
 
     def meta_dump(self, is_thread_meta):
-        """Dumps website metadata into a JSON file"""
+        """Dumps website metadata into a JSON file; if is_thread_meta, dumps thread values, else updates site_meta and dumps scan values"""
 
         if is_thread_meta:
             self.stat_handler.set_scan_values(self.soup)
