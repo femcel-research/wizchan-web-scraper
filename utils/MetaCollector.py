@@ -83,7 +83,7 @@ class MetaCollector:
         }
         return info
 
-    def meta_dump(self, is_thread_meta):  # 0 = scan; 1 = thread; 2 = site
+    def meta_dump(self, is_thread_meta):
         """Dumps website metadata into a JSON file"""
 
         if is_thread_meta:
@@ -92,7 +92,9 @@ class MetaCollector:
             metadata = {**self.page_info_to_JSON(), **self.date_to_JSON(), **self.stat_handler.get_thread_meta()}   
         else:
             self.stat_handler.set_scan_values(self.soup)
+            self.stat_handler.update_site_meta()
             metadata = {**self.page_info_to_JSON(), **self.date_to_JSON(), **self.stat_handler.get_scan_meta()}
 
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=2, ensure_ascii=False)
+        

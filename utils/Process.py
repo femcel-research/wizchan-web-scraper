@@ -70,7 +70,6 @@ class Process:
         thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
         (thread_meta.meta_dump(True))
 
-
         # Add URL to list of processed URLs
         self.log_processed_url(url)
 
