@@ -132,8 +132,14 @@ class Process:
             soup = self.make_soup_object(page)
             intro_element = soup.find(class_="intro")
             
-            if intro_element is not None:  # If not 404 or some other error
-                id = intro_element.get("id")
+            # Using intro_element since requests.get would still technically return a page, the page itself would just have a 404 error?
+            # Tries to retrieve the id of the intro elem. If unable, it will log the specific status code of the page. Otherwise, continue as normal.
+            # If at any point, a 404 slips through the cracks, retrieve code for stuff below committed prior to (11/19 6:15pm)
+            try:
+               id = intro_element.get("id") 
+            except:
+                logging.warning(page.status_code + " error; processing unsuccessful; skipping")  # Log message
+            else:
                 logging.info("Checking against previous scans")  # Log message
                 if not self.check_thread_folder(id):  # return True if there is a thread ID folder
                     os.makedirs(self.THREAD_FOLDER_PATH.substitute(t = id), exist_ok=True)  # if False, make thread ID folder
@@ -142,8 +148,6 @@ class Process:
                 else: 
                     if not self.check_date_updated(page, id):  # return True if previous scan up-to-date
                         self.make_scan_files(page, soup, url, id)  # if False, then scan normally
-            else:
-                logging.warning("Likely 404 error; processing unsuccessful; skipping")  # Log message
         
         logging.info("Fully processed all URLs") # Log message
 
