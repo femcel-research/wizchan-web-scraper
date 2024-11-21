@@ -65,7 +65,7 @@ class MetaStatHandler:
         self.num_total_posts += self.num_all_posts
         self.num_lost_posts += self.num_new_lost_posts
     
-    def set_site_values(self, site_data):
+    def set_site_values(self, site_data, new_thread):
         if "num_sitewide_threads" in site_data:
             self.num_sitewide_threads = site_data["num_sitewide_threads"]
             self.num_sitewide_total_posts = site_data["num_sitewide_total_posts"]
@@ -76,7 +76,9 @@ class MetaStatHandler:
             self.num_sitewide_total_posts = 0
             self.num_sitewide_dist_posts = 0
         
-        self.num_sitewide_threads += self.num_new_posts  
+        if new_thread:
+            self.num_sitewide_threads += 1  
+
         self.num_sitewide_total_posts += self.num_all_posts
         self.num_sitewide_dist_posts += self.num_dist_posts
 
@@ -106,12 +108,12 @@ class MetaStatHandler:
             "num_sitewide_dist_posts" : self.num_sitewide_dist_posts
         }
     
-    def update_site_meta(self):
+    def update_site_meta(self, new_thread):
         site_meta = "./data/" + self.site_title + "_meta.json"
 
         with open(site_meta, 'r+') as site_json_file:
             site_data = json.load(site_json_file)
-            self.set_site_values(site_data)
+            self.set_site_values(site_data, new_thread)
             # Update existing values and add new ones
             site_data.update(self.get_site_meta())
             site_json_file.seek(0)

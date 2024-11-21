@@ -89,10 +89,12 @@ class MetaCollector:
         if is_thread_meta:
             self.stat_handler.set_scan_values(self.soup)
             self.stat_handler.set_thread_values()
+            self.stat_handler.update_site_meta(True)
             metadata = {**self.page_info_to_JSON(), **self.date_to_JSON(), **self.stat_handler.get_thread_meta()}   
         else:
             self.stat_handler.set_scan_values(self.soup)
-            self.stat_handler.update_site_meta()
+            self.stat_handler.set_thread_values()
+            self.stat_handler.update_site_meta(False)
             metadata = {**self.page_info_to_JSON(), **self.date_to_JSON(), **self.stat_handler.get_scan_meta()}
 
         with open(self.file_path, "w", encoding="utf-8") as f:
