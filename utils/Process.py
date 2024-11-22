@@ -38,10 +38,11 @@ class Process:
             self.scraper = HomePageScraper.HomePageScraper(url)
             self.url_list = self.scraper.urls_to_list()
         except:
+            # If unable to scrape URLs due to homepage being down
             logging.info("Page is inaccessible.")
             logging.info("Status Code: " + str(page.status_code))
         else:   
-            # Log message
+            # If able to retrieve a url list, log message
             if (len(self.url_list) <= 0):
                 logging.critical("URL list is empty")
             else: 
