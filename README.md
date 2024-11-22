@@ -1,5 +1,6 @@
 # web-scraper
-## How to read the log files
+## How to read the log files/general behavior  
+### Typical output  
 Each log file is named after the scan time and date.  
 
 The log first prints the URLs which have been retrieved into the scan list.  
@@ -21,6 +22,10 @@ Once all URLs have been processed, the number of functional and broken URLs is p
 
 A message indicating the scan is complete should finally be printed in the terminal.  
 
+### Errors you may come across  
+A critical message "URL list is empty" will print if there are no URLs to scan.  
+A warning displaying the webpage's error code will print if there is not content available to scan.  
+
 ## How to read different meta values  
 ### thread_meta file  
 **["dist_post_ids"]** is the list of distinctive post_ids accross all scans for a single thread  
@@ -39,3 +44,8 @@ A message indicating the scan is complete should finally be printed in the termi
 (WIP) **["num_sitewide_threads"]** is a count of all threads (Can't confirm implementation due to 504)  
 **["num_sitewide_total_posts"]** is a count of all posts across all scans (including duplicates) across all threads  
 (WIP) **["num_sitewide_dist_posts"]** is a count of all posts across all scans across all threads (only counting 1 per set of duplicates) (Can't confirm implementation due to 504)  
+
+## Other data collected  
+In addition to the statistics above, a complete scan of each webpage's HTML is collected with each processing. Additional metadata regarding thread number, etc. is also saved alongside the above statistics in the associated meta JSON files with each scan — as well as a parsed JSON file containing the posts in the scanned thread.  
+
+Each thread can be scanned multiple times, depending on when previous scans were/if a scan was already performed at a specified update_date. As scans are performed using homepage URLs in descending order, each scan of a particular thread will be performed using the most up-to-date version of the thread.
