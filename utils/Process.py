@@ -30,18 +30,27 @@ class Process:
             style="%",
             level=logging.INFO
         )
-
-        # Get URLs
-        self.scraper = HomePageScraper.HomePageScraper(url)
-        self.url_list = self.scraper.urls_to_list()
-
-        # Log message 
-        if (len(self.url_list) <= 0):
-            logging.critical("URL list is empty")
-        else: 
-            logging.info("The following URLs have been scraped")
-            for url in self.url_list:
-                logging.info(url)
+        
+        page = requests.get(url, stream=True)
+        
+        try:
+            # Get URLs
+            self.scraper = HomePageScraper.HomePageScraper(url)
+            self.url_list = self.scraper.urls_to_list()
+        except:
+            logging.info("Page is inaccessible.")
+            logging.info("Status Code: " + str(page.status_code))
+        else:   
+            # Log message
+            if (len(self.url_list) <= 0):
+                logging.critical("URL list is empty")
+            else: 
+                logging.info("The following URLs have been scraped")
+                for url in self.url_list:
+                    logging.info(url)
+                self.process_current_list()
+                    
+        
 
     def log_processed_url(self, url):
         """Save list of processed URLs to txt file in data/processed"""
@@ -141,6 +150,8 @@ class Process:
 
     def process_current_list(self):
         """For each URL in the list, get thread HTML, metadata JSON, and content JSON"""
+        
+        
         logging.info("Processing the URLs")  # Log message
         working_urls = 0
         failed_urls = 0
