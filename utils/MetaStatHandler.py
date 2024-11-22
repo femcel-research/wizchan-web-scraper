@@ -4,7 +4,7 @@ import os
 
 class MetaStatHandler:
     def __init__(self, thread_meta):
-        """Initializes with thread meta stats"""
+        """Initializes with thread meta stats if it exists already; otherwise sets everything to 0"""
         if os.path.exists(thread_meta):
             with open(thread_meta) as json_file:
                 self.data = json.load(json_file)
@@ -21,7 +21,10 @@ class MetaStatHandler:
             self.num_total_posts = 0 
             self.num_lost_posts = 0 
 
-    def set_scan_values(self, soup):
+    def set_scan_and_thread_values(self, soup):
+        """Sets the values for the current scan of the website and changes thread meta file values from initialized values
+        accordingly"""
+        # Get a masterlist of all posts
         self.all_post_ids = []
         original_post = soup.find(class_="post op")
         self.all_post_ids.append(original_post.find(class_="intro").get("id"))
@@ -29,43 +32,40 @@ class MetaStatHandler:
         for reply in soup.find_all(class_="post reply"):
             self.all_post_ids.append(reply.find(class_="intro").get("id"))
 
+        # Get the title of the website for any use in update_site_meta()
         meta_keywords = soup.find("meta", attrs={"name": "keywords"})
         if meta_keywords:
             keywords = meta_keywords["content"]
         else:
             keywords = ""
         self.site_title = keywords.split(",")[0]
-        
-        self.new_post_ids = []  # post_ids that are in this scan, but not dist_post_ids (though they'll be added l8r)
+    
+        self.new_post_ids = []
         self.new_lost_posts = []
         self.num_new_lost_posts = 0
-        
+
+        # Make a list of all post_ids that aren't already in dist_post_ids in thread meta file
         for post_id in self.all_post_ids:
             if post_id not in self.dist_post_ids:
                 self.new_post_ids.append(post_id)
+                self.dist_post_ids.append(post_id)
         
+        # Make a list/tally the post_ids that were once added to dist_post_ids, but aren't in the current scan
         for post_id in self.dist_post_ids:
-            if post_id not in self.all_post_ids:
+            if post_id not in self.all_post_ids and post_id not in self.lost_post_ids: 
                 self.new_lost_posts.append(post_id)
+                self.lost_post_ids.append(post_id)
                 self.num_new_lost_posts += 1
 
         self.num_all_posts = len(self.all_post_ids)
         self.num_new_posts = len(self.new_post_ids)
-    
-    def set_thread_values(self):
-        """Call after set_scan_values()"""
-        
-        for post_id in self.new_post_ids:
-            if post_id not in self.dist_post_ids:
-                self.dist_post_ids.append(post_id)
-        for post_id in self.new_lost_posts:
-            if post_id not in self.lost_post_ids:
-                self.lost_post_ids.append(post_id)
         self.num_dist_posts += self.num_new_posts
         self.num_total_posts += self.num_all_posts
         self.num_lost_posts += self.num_new_lost_posts
     
     def set_site_values(self, site_data, new_thread):
+        """If there is a site meta file already, it'll grab the appropriate values then update them using new numbers
+        retrieved from set_scan_and_thread_values(); else set them to 0. If new_thread, num_sitewide_threads += 1"""
         if "num_sitewide_threads" in site_data:
             self.num_sitewide_threads = site_data["num_sitewide_threads"]
             self.num_sitewide_total_posts = site_data["num_sitewide_total_posts"]
@@ -83,6 +83,8 @@ class MetaStatHandler:
         self.num_sitewide_dist_posts += self.num_dist_posts
 
     def get_thread_meta(self):
+        """Returns a dictionary for a JSON file of dist_post_ids, lost_post_ids, num_dist_posts
+        num_total_posts, num_lost_posts"""
         return {
             "dist_post_ids" : self.dist_post_ids,
             "lost_post_ids" : self.lost_post_ids,
@@ -92,6 +94,8 @@ class MetaStatHandler:
         }
     
     def get_scan_meta(self):
+        """Returns a dictionary for a JSON file of all_post_ids, new_post_ids, new_lost_posts
+        num_all_posts, num_new_posts, num_new_lost_posts"""
         return {
             "all_post_ids" : self.all_post_ids,
             "new_post_ids" : self.new_post_ids,
@@ -102,6 +106,7 @@ class MetaStatHandler:
         }
     
     def get_site_meta(self):
+        """Returns a dictionary for a JSON file of num_sitewide_threads, num_sitewide_total_posts, num_sitewide_dist_posts"""
         return {
             "num_sitewide_threads" : self.num_sitewide_threads,
             "num_sitewide_total_posts" : self.num_sitewide_total_posts,
@@ -109,6 +114,8 @@ class MetaStatHandler:
         }
     
     def update_site_meta(self, new_thread):
+        """Call after setting scan and thread values; accesses and updates site meta file with appropriate stats from
+        get_site_meta()"""
         site_meta = "./data/" + self.site_title + "_meta.json"
 
         with open(site_meta, 'r+') as site_json_file:
