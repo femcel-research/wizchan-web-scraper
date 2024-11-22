@@ -1,20 +1,41 @@
 # web-scraper
+## How to read the log files
+Each log file is named after the scan time and date.  
 
-## How to read different meta values
-### thread_meta
-**["dist_post_ids"]** is the list of distinctive post_ids accross all scans for a single thread
-**["lost_post_ids"]** (untested) is a list of post_ids that are in ["dist_post_ids"], but not a subsequent scan (also needs to not alread be in ["lost_post_ids"] already)
-**["num_dist_posts"]** is a count that gets added to using ["num_new_posts"] on every scan
-**["num_total_posts"]** is a count that gets added to using ["num_all_posts"] on every scan
-**["num_lost_posts"]** is a count of every post that was formerly scanned for the current thread, but was not in a subsequent scan
-### scan_meta
-**["all_post_ids"]** is a list of all post_ids (including post_ids that were in prior scans) that were scanned
-**["new_post_ids"]** is a list of post_ids that were scanned and didn't already exist in ["dist_post_ids"]
-**["new_lost_posts"]** (untested) is a list of post_ids that are in ["dist_post_ids"], but not this scan (also needs to not alread be in ["lost_post_ids"] already)
-**["num_all_posts"]** is a count of all posts that were scanned
-**["num_new_posts"]** is a count of all posts that were scanned and didn't already exist in ["dist_post_ids"]
-**["num_new_lost_posts"]** is a count of all posts that are in ["dist_post_ids"], but not this scan (also needs to not alread be in ["lost_post_ids"] already)
-### site_meta
-(WIP) **["num_sitewide_threads"]** is a count of all threads (Currently a duplicate of ["num_sitewide_total_posts"])
-**["num_sitewide_total_posts"]** is a count of all posts across all scans (including duplicates) across all threads
-(WIP) **["num_sitewide_dist_posts"]** is a count of all posts across all scans across all threads (only counting 1 per set of duplicates)
+The log first prints the URLs which have been retrieved into the scan list.  
+
+The scraper processes each URL one-by-one:  
+If the URL leads to a valid webpage...  
+It checks to see if a thread folder already exists for the thread in the URL.  
+If a thread folder does not exist, then it makes a new directory/thread folder.  
+It then checks to see if a thread_meta file exists for the thread.  
+If a thread_meta file does not exist, it proceeds with a scan.  
+If a thread_meta file does exist, but its update_date isn't equal to the update_date of the current webpage, then it proceeds with a scan.  
+A new folder is made for each scan with the current time and date.  
+HTML info, current webpage scan metadata, and current webpage scan thread content are written to new associated files; the thread_meta file is also written to/updated accordingly.  
+The URL of the webpage is added to processed.txt in the data folder.  
+When finished, "Generated all scans for thread #___" will be printed — along with the number of total posts (the op and all replies) and the number of new posts that were scanned.  
+Finally, the next URL is processed.  
+
+Once all URLs have been processed, the number of functional and broken URLs is printed. As well as the number of new scans that were performed (not skipped due to duplicates or a broken URL).  
+
+A message indicating the scan is complete should finally be printed in the terminal.  
+
+## How to read different meta values  
+### thread_meta file  
+**["dist_post_ids"]** is the list of distinctive post_ids accross all scans for a single thread  
+**["lost_post_ids"]** (untested) is a list of post_ids that are in ["dist_post_ids"], but not a subsequent scan (also needs to not alread be in ["lost_post_ids"] already)  
+**["num_dist_posts"]** is a count that gets added to using ["num_new_posts"] on every scan  
+**["num_total_posts"]** is a count that gets added to using ["num_all_posts"] on every scan  
+**["num_lost_posts"]** is a count of every post that was formerly scanned for the current thread, but was not in a subsequent scan  
+### scan_meta file  
+**["all_post_ids"]** is a list of all post_ids (including post_ids that were in prior scans) that were scanned  
+**["new_post_ids"]** is a list of post_ids that were scanned and didn't already exist in ["dist_post_ids"]  
+**["new_lost_posts"]** (untested) is a list of post_ids that are in ["dist_post_ids"], but not this scan (also needs to not alread be in ["lost_post_ids"] already)  
+**["num_all_posts"]** is a count of all posts that were scanned  
+**["num_new_posts"]** is a count of all posts that were scanned and didn't already exist in ["dist_post_ids"]  
+**["num_new_lost_posts"]** is a count of all posts that are in ["dist_post_ids"], but not this scan (also needs to not alread be in ["lost_post_ids"] already)  
+### site_meta file  
+(WIP) **["num_sitewide_threads"]** is a count of all threads (Can't confirm implementation due to 504)  
+**["num_sitewide_total_posts"]** is a count of all posts across all scans (including duplicates) across all threads  
+(WIP) **["num_sitewide_dist_posts"]** is a count of all posts across all scans across all threads (only counting 1 per set of duplicates) (Can't confirm implementation due to 504)  

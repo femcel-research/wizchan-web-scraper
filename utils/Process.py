@@ -102,17 +102,17 @@ class Process:
             return False
         
     def check_thread_meta(self, id):
-        """Return True if an initial_meta file for the specified ID exists"""
+        """Return True if an thread_meta file for the specified ID exists"""
         if(os.path.exists(self.THREAD_META_PATH.substitute(t = id))):
-           logging.info("An initial_meta_" + id + ".json exists for thread #" + id)
+           logging.info("An thread_meta_" + id + ".json exists for thread #" + id)
            return True
         else:
-            logging.info("An initial_meta_" + id + ".json does not exist for thread #" + id)
+            logging.info("An thread_meta_" + id + ".json does not exist for thread #" + id)
             return False    
             
 
     def check_date_updated(self, page, id):
-        """Return True if update_date in initial_meta matches current update_date"""
+        """Return True if update_date in thread_meta matches current update_date"""
         with open(self.THREAD_META_PATH.substitute(t = id)) as json_file:
             data = json.load(json_file)
         
