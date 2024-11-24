@@ -27,7 +27,7 @@ class HomePageScraper:
             anchor_tag = list.find("a")
             if anchor_tag:
                 url = anchor_tag.get("href")  # Get the value of "href" attribute; url info
-                self.url_list.append("https://crystal.cafe" + url)
+                self.url_list.append("https://wizchan.org" + url)
 
         return(self.url_list)
 
