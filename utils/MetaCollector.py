@@ -13,22 +13,22 @@ from .MetaStatHandler import MetaStatHandler
 # add automatic html, meta, thread folders
 class MetaCollector:
     """Collects metadata from a website and stores it in a JSON file"""
-    THREAD_META_PATH = Template("./data/$t/thread_meta_$t.json")  # $t for thread id
+    THREAD_META_PATH = Template("./data/$t/thread_meta_$t.json")  # $t for thread self.id
 
-    def __init__(self, page, soup, folder_path, is_thread_meta):
+    def __init__(self, page, soup, id, folder_path, is_thread_meta):
         # Website info
         self.page = page
         self.soup = soup
-        id = soup.find(class_="intro").get("id")
+        self.id = id
 
         # File path
         if is_thread_meta:
-            file_name = "thread_meta_" + id + ".json"
+            file_name = "thread_meta_" + self.id + ".json"
         else:
-            file_name = "meta_" + id + ".json"
+            file_name = "meta_{}.json".format(self.id)
         self.file_path = os.path.join(folder_path, file_name)
 
-        json_path = self.THREAD_META_PATH.substitute(t = id)
+        json_path = self.THREAD_META_PATH.substitute(t = self.id)
         self.stat_handler = MetaStatHandler(json_path)
 
     def date_to_JSON(self):
@@ -79,7 +79,7 @@ class MetaCollector:
             "URL": page.url,
             "board": board,
             "thread_title": title,
-            "thread_number": self.soup.find(class_="intro").get("id"),
+            "thread_number": self.id,
         }
         return info
 
