@@ -6,6 +6,7 @@ __pycache__/
 *$py.class
 .venv
 femcel_venv/
+wizchan-venv/
 .vscode-server/
 .gitconfig
 .bash_history
