@@ -15,10 +15,11 @@ class MetaCollector:
     """Collects metadata from a website and stores it in a JSON file"""
     THREAD_META_PATH = Template("./data/$t/thread_meta_$t.json")  # $t for thread self.id
 
-    def __init__(self, page, soup, id, folder_path, is_thread_meta):
+    def __init__(self, page, soup, site_title, id, folder_path, is_thread_meta):
         # Website info
         self.page = page
         self.soup = soup
+        self.site_title = site_title
         self.id = id
 
         # File path
@@ -29,7 +30,7 @@ class MetaCollector:
         self.file_path = os.path.join(folder_path, file_name)
 
         json_path = self.THREAD_META_PATH.substitute(t = self.id)
-        self.stat_handler = MetaStatHandler(json_path)
+        self.stat_handler = MetaStatHandler(json_path, self.site_title)
 
     def date_to_JSON(self):
         """Captures date published, date updated, and date scraped from a specified website"""
@@ -87,7 +88,7 @@ class MetaCollector:
         """Dumps website metadata into a JSON file; if is_thread_meta, dumps thread values, else updates site_meta and dumps scan values"""
 
         if is_thread_meta:
-            self.stat_handler.set_scan_and_thread_values(self.soup)
+            self.stat_handler.set_scan_and_thread_values(self.soup, self.site_title)
             self.stat_handler.update_site_meta(True)
             metadata = {**self.page_info_to_JSON(), **self.date_to_JSON(), **self.stat_handler.get_thread_meta()}   
         else:

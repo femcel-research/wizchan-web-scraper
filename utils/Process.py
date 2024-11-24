@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import requests
 import datetime
 import logging
@@ -31,11 +32,12 @@ class Process:
             level=logging.INFO
         )
         
+        self.site_title = re.sub(r'https://|\.org/', '', url)
         page = requests.get(url, stream=True)
         
         try:
             # Get URLs
-            self.scraper = HomePageScraper.HomePageScraper(url)
+            self.scraper = HomePageScraper.HomePageScraper(url, self.site_title)
             self.url_list = self.scraper.urls_to_list()
         except:
             # If unable to scrape URLs due to homepage being down
@@ -75,7 +77,7 @@ class Process:
         logging.info("Saved HTML info for thread #" + id)
 
         # JSON current scan metadata file
-        meta = MetaCollector(page, soup, id, self.SCAN_FOLDER_PATH.substitute(t = id), False)
+        meta = MetaCollector(page, soup, self.site_title, id, self.SCAN_FOLDER_PATH.substitute(t = id), False)
         (meta.meta_dump(False))
         logging.info("Saved current scan metadata for thread #" + id)
 

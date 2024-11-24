@@ -38,7 +38,7 @@ class TextCollector:
         for image in post.find_all("img", class_="post-image"):
             src = image.get("src")
             if src:
-                image_links.append("https://crystal.cafe" + src)
+                image_links.append("https://wizchan.org" + src)
         return image_links
 
     def extract_text(self, post):
