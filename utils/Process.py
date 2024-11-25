@@ -75,21 +75,23 @@ class Process:
         thread = HTMLCollector(soup, id, self.SCAN_FOLDER_PATH.substitute(t = id))
         (thread.saveHTML())
         logging.info("Saved HTML info for thread #" + id)
+        
+        #TODO: 11/25: Have slightly rework other utils, however whats most important is that we are able to capture the raw data (HTML)
 
         # JSON current scan metadata file
-        meta = MetaCollector(page, soup, self.site_title, id, self.SCAN_FOLDER_PATH.substitute(t = id), False)
-        (meta.meta_dump(False))
-        logging.info("Saved current scan metadata for thread #" + id)
+        # meta = MetaCollector(page, soup, self.site_title, id, self.SCAN_FOLDER_PATH.substitute(t = id), False)
+        # (meta.meta_dump(False))
+        # logging.info("Saved current scan metadata for thread #" + id)
 
         # JSON current scan thread content file
-        content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
-        (content.write_thread())
-        logging.info("Saved current thread content for thread #" + id)
+        # content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
+        # (content.write_thread())
+        # logging.info("Saved current thread content for thread #" + id)
 
         # JSON thread scan metadata
-        thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
-        (thread_meta.meta_dump(True))
-        logging.info("Saved/updated thread metadata for thread #" + id)
+        # thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
+        # (thread_meta.meta_dump(True))
+        # logging.info("Saved/updated thread metadata for thread #" + id)
 
         # Add URL to list of processed URLs
         self.log_processed_url(url)
