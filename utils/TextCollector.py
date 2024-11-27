@@ -15,13 +15,13 @@ class TextCollector:
 
         # Returns top portion of original post
         self.threadIntro = soup.find(class_="intro")
-        self.threadNumber = soup.find(class_="intro").get("id")
+        self.threadNumber = self.threadIntro.find("a").get("id")
 
         # Returns original post.
         self.originalPost = soup.find(class_="post op")
 
         # Variable holds the ID of the original post.
-        self.originalPostID = self.threadIntro["id"]
+        self.originalPostID = self.threadNumber
 
         # Finds every page element with the class "post reply" and returns it in an array.
         self.postReplies = soup.find_all(class_="post reply")
@@ -39,7 +39,7 @@ class TextCollector:
         for image in post.find_all("img", class_="post-image"):
             src = image.get("src")
             if src:
-                image_links.append("https://crystal.cafe" + src)
+                image_links.append("https://wizchan.org" + src)
         return image_links
 
     def extract_text(self, post):
@@ -66,7 +66,7 @@ class TextCollector:
         links = []
 
         original_content = {
-            "post_id": self.originalPost.find(class_="intro").get("id"),
+            "post_id": self.threadNumber,
             "username": self.originalPost.find(class_="name").get_text(),
             "reply_to_another_thread?": True if links_to_other_posts else False,
             "date_posted": date,

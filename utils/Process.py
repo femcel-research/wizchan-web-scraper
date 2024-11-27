@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import requests
 import datetime
 import logging
@@ -14,28 +15,29 @@ from string import Template
 
 class Process:
     """Takes in a homepage URL then loops through the links on it, 'processing' each one"""
-    THREAD_META_PATH = Template("./data/$t/thread_meta_$t.json")  # $t for thread id
+    THREAD_META_PATH = Template("./data/wizchan/$t/thread_meta_$t.json")  # $t for thread id
     SCAN_META_PATH = Template("$s/meta_$t.json")
-    THREAD_FOLDER_PATH = Template("./data/$t")  # $t for thread id
-    SCAN_FOLDER_PATH = Template("./data/$t/" + datetime.today().strftime("%Y-%m-%dT%H:%M:%S"))  # $t for thread id
+    THREAD_FOLDER_PATH = Template("./data/wizchan/$t")  # $t for thread id
+    SCAN_FOLDER_PATH = Template("./data/wizchan/$t/" + datetime.today().strftime("%Y-%m-%dT%H:%M:%S"))  # $t for thread id
     successful_scans = 0
 
     def __init__(self, url):
         # Logging
         self.logger = logging.getLogger(__name__)
         logging.basicConfig(
-            filename=("./data/logs/" + datetime.today().strftime('%Y-%m-%dT%H:%M:%S') + ".log"),
+            filename=("./data/wizchan/logs/" + datetime.today().strftime('%Y-%m-%dT%H:%M:%S') + ".log"),
             filemode="w",
             format=(datetime.today().strftime('%Y-%m-%dT%H:%M:%S') + " %(levelname)s: %(message)s"),
             style="%",
             level=logging.INFO
         )
         
+        self.site_title = re.sub(r'https://|\.org/', '', url)
         page = requests.get(url, stream=True)
         
         try:
             # Get URLs
-            self.scraper = HomePageScraper.HomePageScraper(url)
+            self.scraper = HomePageScraper.HomePageScraper(url, self.site_title)
             self.url_list = self.scraper.urls_to_list()
         except:
             # If unable to scrape URLs due to homepage being down
@@ -55,7 +57,7 @@ class Process:
 
     def log_processed_url(self, url):
         """Save list of processed URLs to txt file in data/processed"""
-        with open("./data/processed/processed.txt", "a") as file:
+        with open("./data/wizchan/processed/processed.txt", "a") as file:
             file.write(url + '\n')
         logging.info("Logging " + url + " in processed.txt")
 
@@ -70,24 +72,26 @@ class Process:
         logging.info("Made folder for current scan")
 
         # HTML current scan file
-        thread = HTMLCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
+        thread = HTMLCollector(soup, id, self.SCAN_FOLDER_PATH.substitute(t = id))
         (thread.saveHTML())
         logging.info("Saved HTML info for thread #" + id)
+        
+        #TODO: 11/25: Have slightly rework other utils, however whats most important is that we are able to capture the raw data (HTML)
 
         # JSON current scan metadata file
-        meta = MetaCollector(page, soup, self.SCAN_FOLDER_PATH.substitute(t = id), False)
-        (meta.meta_dump(False))
-        logging.info("Saved current scan metadata for thread #" + id)
+        # meta = MetaCollector(page, soup, self.site_title, id, self.SCAN_FOLDER_PATH.substitute(t = id), False)
+        # (meta.meta_dump(False))
+        # logging.info("Saved current scan metadata for thread #" + id)
 
         # JSON current scan thread content file
-        content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
-        (content.write_thread())
-        logging.info("Saved current thread content for thread #" + id)
+        # content = TextCollector(soup, self.SCAN_FOLDER_PATH.substitute(t = id))
+        # (content.write_thread())
+        # logging.info("Saved current thread content for thread #" + id)
 
         # JSON thread scan metadata
-        thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
-        (thread_meta.meta_dump(True))
-        logging.info("Saved/updated thread metadata for thread #" + id)
+        # thread_meta = MetaCollector(page, self.make_soup_object(page), self.THREAD_FOLDER_PATH.substitute(t = id), True)
+        # (thread_meta.meta_dump(True))
+        # logging.info("Saved/updated thread metadata for thread #" + id)
 
         # Add URL to list of processed URLs
         self.log_processed_url(url)
@@ -168,7 +172,8 @@ class Process:
             # Tries to retrieve the id of the intro elem. If unable, it will log the specific status code of the page. Otherwise, continue as normal.
             # If at any point, a 404 slips through the cracks, retrieve code for stuff below committed prior to (11/19 6:15pm)
             try:
-               id = intro_element.get("id") 
+               #id = intro_element.get("id")
+             id = soup.find('div', class_="thread").get('id').strip('thread_') 
             except:
                 logging.warning(page.status_code + " error; processing unsuccessful; skipping")  # Log message
                 failed_urls+=1
@@ -177,7 +182,7 @@ class Process:
                 logging.info("Checking against previous scans")  # Log message
                 if not self.check_thread_folder(id):  # return True if there is a thread ID folder
                     os.makedirs(self.THREAD_FOLDER_PATH.substitute(t = id), exist_ok=True)  # if False, make thread ID folder
-                    logging.info("Made thread folder for thread #" + id)
+                    logging.info("Made thread folder for thread #{}".format(id))
                 if not self.check_thread_meta(id):  # return True if there is an thread_meta file for the thread
                     self.make_scan_files(page, soup, url, id)
                 else: 
