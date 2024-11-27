@@ -4,6 +4,7 @@ import requests
 import json
 import os
 import re
+from utils import MasterVersionGenerator
 
 
 class TextCollector:
@@ -128,10 +129,13 @@ class TextCollector:
         replies = self.extract_replies()
 
         thread_contents = {
-            "thread number": self.threadNumber,
-            "original post": original_post,
+            "thread_number": self.threadNumber,
+            "original_post": original_post,
             "replies": replies,
         }
+        
+        # Add content to master version
+        self.add_to_master(original_post, replies, self.threadNumber, self.folder_path)
 
         return thread_contents
 
@@ -139,3 +143,6 @@ class TextCollector:
         """Opens a writeable text file, writes related headers and original post content on it and then closes file."""
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(self.get_thread_contents(), f, indent=3, ensure_ascii=False)
+            
+    def add_to_master(self, original, replies, thread_number, folder_path):
+        master = MasterVersionGenerator(original, replies, thread_number, folder_path)
